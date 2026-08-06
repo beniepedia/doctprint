@@ -14,15 +14,15 @@ export default {
             .map((item) => {
               const p = cartProduct(item.id)
               return `
-                <div class="bg-surface rounded-lg border border-border p-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                  <img class="w-full sm:w-24 h-24 object-cover rounded-md bg-surface-low flex-shrink-0" src="${placeholder()}" alt="${p.name}" />
-                  <div class="flex-grow flex flex-col justify-between h-full">
-                    <div class="flex justify-between items-start mb-1">
-                      <div>
-                        <h3 class="text-xl font-semibold text-text-primary">${p.name}</h3>
+                <div class="bg-surface rounded-lg border border-border p-3 sm:p-4 flex gap-3 sm:gap-4 items-center">
+                  <img class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-md bg-surface-low flex-shrink-0" src="${placeholder()}" alt="${p.name}" />
+                  <div class="flex-grow flex flex-col justify-between h-full min-w-0">
+                    <div class="flex justify-between items-start gap-3 mb-1">
+                      <div class="min-w-0">
+                        <h3 class="text-base md:text-lg font-semibold text-text-primary line-clamp-2">${p.name}</h3>
                         <p class="text-sm text-text-muted">${item.variant || p.unit}</p>
                       </div>
-                      <span class="text-xl font-semibold text-text-primary">${formatRp(p.price * item.qty)}</span>
+                      <span class="text-base md:text-lg font-semibold text-text-primary whitespace-nowrap">${formatRp(p.price * item.qty)}</span>
                     </div>
                     <div class="flex items-center justify-between mt-2">
                       <div class="flex items-center border border-border-input rounded-md overflow-hidden bg-surface">
@@ -44,7 +44,7 @@ export default {
 
       <main class="max-w-7xl mx-auto px-4 md:px-8 py-6 pt-16">
         <div class="mb-6">
-          <h2 class="text-4xl font-bold text-text-primary mb-1">Keranjang Anda</h2>
+          <h2 class="text-2xl md:text-4xl font-bold text-text-primary mb-1">Keranjang Anda</h2>
           <p class="text-base text-text-muted">${count} item di keranjang</p>
         </div>
 
@@ -57,7 +57,7 @@ export default {
           <!-- Ringkasan -->
           <div class="md:col-span-4">
             <div class="bg-surface rounded-lg p-6 border border-border sticky top-20">
-              <h3 class="text-xl font-semibold text-text-primary border-b border-border pb-4 mb-4">Ringkasan Pesanan</h3>
+              <h3 class="text-lg md:text-xl font-semibold text-text-primary border-b border-border pb-4 mb-4">Ringkasan Pesanan</h3>
               <div class="space-y-2 mb-6">
                 <div class="flex justify-between text-base text-text-muted"><span>Subtotal</span><span class="text-text-primary font-semibold">${formatRp(subtotal)}</span></div>
                 <div class="flex justify-between text-base text-text-muted"><span>Pengiriman</span><span class="text-text-primary font-semibold">Dihitung saat checkout</span></div>
@@ -65,8 +65,8 @@ export default {
               </div>
               <div class="border-t border-border pt-4 mb-6">
                 <div class="flex justify-between items-center">
-                  <span class="text-2xl font-bold text-text-primary">Total</span>
-                  <span class="text-2xl font-bold text-text-primary">${formatRp(total)}</span>
+                  <span class="text-xl md:text-2xl font-bold text-text-primary">Total</span>
+                  <span class="text-xl md:text-2xl font-bold text-text-primary">${formatRp(total)}</span>
                 </div>
               </div>
 
@@ -78,7 +78,7 @@ export default {
                 </div>
               </div>
 
-              <a href="#/checkout" class="bg-accent w-full py-4 rounded-lg text-base font-semibold text-white flex justify-center items-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+              <a href="#/checkout" class="bg-accent w-full py-3.5 rounded-lg text-base font-semibold text-white flex justify-center items-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
                 <span>Lanjut ke Checkout</span>${icon('arrow_forward')}
               </a>
               <div class="mt-4 flex items-center justify-center gap-1 text-text-muted text-sm">

@@ -4,9 +4,9 @@ export const TAX_RATE = 0.08
 
 export const state = {
   cart: [
-    { id: 'cetak-fullcolor', qty: 10, variant: 'HVS 100gsm' },
-    { id: 'jilid-skripsi', qty: 2, variant: 'Hard Cover' },
-    { id: 'cetak-foto', qty: 12, variant: 'Glossy 4R' },
+    { id: 'printer-ecotank-l3110', qty: 1, variant: 'Multi Function' },
+    { id: 'cartridge-canon-pg-47', qty: 2, variant: 'Original' },
+    { id: 'kertas-a4-80gsm', qty: 3, variant: '80gsm' },
   ],
 }
 

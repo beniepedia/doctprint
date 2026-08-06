@@ -3,7 +3,7 @@ import { icon, formatRp, placeholder, toast } from '../lib.js'
 import { TopApp } from '../components/TopApp.js'
 import { addToCart } from '../state.js'
 
-const DEFAULT_ID = 'cetak-fullcolor'
+const DEFAULT_ID = 'printer-ecotank-l3110'
 
 export default {
   render(params) {
@@ -30,13 +30,13 @@ export default {
           <!-- Info Produk -->
           <div class="flex flex-col space-y-6">
             <div>
-              <h1 class="text-4xl font-bold text-text-primary">${p.name}</h1>
-              <p class="text-2xl font-semibold text-accent-deep mt-1">${formatRp(p.price)}<span class="text-sm text-text-muted"> ${p.unit}</span></p>
+              <h1 class="text-2xl md:text-4xl font-bold text-text-primary">${p.name}</h1>
+              <p class="text-xl md:text-2xl font-semibold text-accent-deep mt-1">${formatRp(p.price)}<span class="text-sm text-text-muted"> ${p.unit}</span></p>
             </div>
 
             <!-- Warna Kertas -->
             <div class="space-y-2">
-              <h3 class="text-sm font-semibold text-text-muted uppercase">Warna Kertas</h3>
+              <h3 class="text-sm font-semibold text-text-muted uppercase">Pilihan Warna</h3>
               <div class="flex gap-4">
                 ${p.colorOptions
                   .map(
@@ -48,11 +48,11 @@ export default {
 
             <!-- Jenis Kertas -->
             <div class="space-y-2">
-              <h3 class="text-sm font-semibold text-text-muted uppercase">Jenis Kertas</h3>
+              <h3 class="text-sm font-semibold text-text-muted uppercase">Tipe / Varian</h3>
               <div class="grid grid-cols-3 gap-4">
                 ${p.paperOptions
                   .map(
-                    (s, i) => `<button data-paper class="py-4 ${i === 0 ? 'border-2 border-accent' : 'border border-border-input'} rounded-lg text-base font-semibold text-text-primary bg-surface text-center hover:border-accent transition-colors">${s}</button>`,
+                    (s, i) => `<button data-paper class="py-3 ${i === 0 ? 'border-2 border-accent' : 'border border-border-input'} rounded-lg text-sm md:text-base font-semibold text-text-primary bg-surface text-center hover:border-accent transition-colors">${s}</button>`,
                   )
                   .join('')}
               </div>
@@ -60,7 +60,7 @@ export default {
 
             <!-- Deskripsi -->
             <div class="space-y-2">
-              <h3 class="text-2xl font-semibold text-text-primary">Tentang Layanan</h3>
+              <h3 class="text-lg md:text-xl font-semibold text-text-primary">Tentang Layanan</h3>
               <p class="text-base text-text-muted leading-relaxed">${p.desc}</p>
             </div>
 
@@ -70,7 +70,7 @@ export default {
                 .map(
                   (s) => `
                   <div class="bg-surface-low p-4 rounded-lg flex flex-col items-center justify-center text-center">
-                    ${icon(s.icon, 'text-accent-container text-3xl mb-1')}
+                    ${icon(s.icon, 'text-accent-container text-2xl mb-1')}
                     <span class="text-sm font-semibold">${s.label}</span>
                   </div>`,
                 )
@@ -82,8 +82,8 @@ export default {
 
       <!-- Sticky Action Bar -->
       <div class="fixed bottom-0 inset-x-0 z-50 bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] p-4 pb-safe flex gap-4">
-        <button data-action="add-to-cart" class="flex-1 py-4 bg-surface border border-primary rounded-lg text-base font-semibold text-primary hover:bg-surface-low transition-colors">Tambah ke Keranjang</button>
-        <button data-action="buy-now" class="flex-1 py-4 bg-accent rounded-lg text-base font-semibold text-white shadow-sm hover:opacity-90 transition-opacity">Beli Sekarang</button>
+        <button data-action="add-to-cart" class="flex-1 py-3.5 bg-surface border border-primary rounded-lg text-base font-semibold text-primary hover:bg-surface-low transition-colors">Tambah ke Keranjang</button>
+        <button data-action="buy-now" class="flex-1 py-3.5 bg-accent rounded-lg text-base font-semibold text-white shadow-sm hover:opacity-90 transition-opacity">Beli Sekarang</button>
       </div>
     `
   },

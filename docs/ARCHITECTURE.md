@@ -53,7 +53,7 @@ lewat `querySelector` di `mount`.
 
 1. Buat `src/views/<nama>.js` yang mengekspor `{ render, mount }`.
 2. Daftarkan di **`src/main.js`** — tambahkan kunci baru pada objek yang diteruskan ke `start(...)`.
-3. Route otomatis: `#/<nama>`; query tersedia via `params` (contoh `#/product?id=cetak-fullcolor`).
+3. Route otomatis: `#/<nama>`; query tersedia via `params` (contoh `#/product?id=printer-ecotank-l3110`).
 4. Opsional: tambahkan entry dari `BottomNav` / kartu.
 
 ## Menambah Komponen

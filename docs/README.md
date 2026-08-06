@@ -1,8 +1,8 @@
 # DoctPrint — Prototipe Desain Frontend
 
-Prototipe web e-commerce layanan percetakan bernama **DoctPrint**, dibangun mulai dari desain
+Prototipe web e-commerce toko online alat kantor bernama **DoctPrint**, dibangun mulai dari desain
 **"ShopEase"** yang dibuat di Stitch Design. Layout, struktur, dan komponen berikut mengikuti desain aslinya;
-hanya branding dan konten teks yang disesuaikan ke konteks percetakan (dokumen, foto, jilid, merch).
+hanya branding dan konten teks yang disesuaikan ke konteks toko alat kantor (printer, tinta, toner, kertas, aksesori).
 
 ## Teknologi
 
@@ -33,7 +33,7 @@ npm run preview  # pratinjau hasil build
 | `#/checkout` | Checkout | `src/views/checkout.js` |
 | `#/profile` | Profil Pengguna | `src/views/profile.js` |
 
-Contoh: `#/product?id=cetak-fullcolor`.
+Contoh: `#/product?id=printer-ecotank-l3110`.
 
 ## Ringkasan Struktur
 

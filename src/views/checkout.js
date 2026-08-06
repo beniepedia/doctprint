@@ -43,7 +43,7 @@ export default {
 
           <!-- Alamat Pengiriman -->
           <section class="bg-surface rounded-lg border border-border p-4 md:p-6 shadow-sm">
-            <h2 class="text-xl font-semibold text-text-primary mb-4 border-b border-border pb-2">Alamat Pengiriman</h2>
+            <h2 class="text-lg md:text-xl font-semibold text-text-primary mb-4 border-b border-border pb-2">Alamat Pengiriman</h2>
             <form class="space-y-4">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="flex flex-col">
@@ -83,7 +83,7 @@ export default {
 
           <!-- Metode Pengiriman -->
           <section class="bg-surface rounded-lg border border-border p-4 md:p-6 shadow-sm">
-            <h2 class="text-xl font-semibold text-text-primary mb-4 border-b border-border pb-2">Metode Pengiriman</h2>
+            <h2 class="text-lg md:text-xl font-semibold text-text-primary mb-4 border-b border-border pb-2">Metode Pengiriman</h2>
             <div class="space-y-2">
               <label class="flex items-center p-4 border-2 border-accent rounded-lg cursor-pointer bg-surface-low transition-colors">
                 <input checked class="w-5 h-5 text-accent border-border-input focus:ring-accent" type="radio" name="shipping" value="standard" />
@@ -104,13 +104,13 @@ export default {
             </div>
           </section>
 
-          <button data-action="continue" class="w-full bg-accent text-white text-base font-semibold py-4 rounded-lg hover:bg-opacity-90 transition-opacity active:scale-[0.98]">Lanjut ke Pembayaran</button>
+          <button data-action="continue" class="w-full bg-accent text-white text-base font-semibold py-3.5 rounded-lg hover:bg-opacity-90 transition-opacity active:scale-[0.98]">Lanjut ke Pembayaran</button>
         </div>
 
         <!-- Kolom Kanan: Ringkasan Pesanan -->
         <aside class="w-full md:w-[380px] flex-shrink-0">
           <div class="bg-surface rounded-lg border border-border p-4 shadow-sm sticky top-24">
-            <h3 class="text-xl font-semibold text-text-primary mb-4 border-b border-border pb-2">Ringkasan Pesanan</h3>
+            <h3 class="text-lg md:text-xl font-semibold text-text-primary mb-4 border-b border-border pb-2">Ringkasan Pesanan</h3>
             <div class="space-y-4 mb-6">
               ${itemsHtml}
             </div>
@@ -118,7 +118,7 @@ export default {
               <div class="flex justify-between text-base text-text-muted"><span>Subtotal</span><span>${formatRp(subtotal)}</span></div>
               <div class="flex justify-between text-base text-text-muted"><span>Pengiriman</span><span>Gratis</span></div>
               <div class="flex justify-between text-base text-text-muted"><span>Pajak</span><span>${formatRp(tax)}</span></div>
-              <div class="flex justify-between text-2xl font-semibold text-text-primary pt-2 border-t border-border"><span>Total</span><span>${formatRp(total)}</span></div>
+              <div class="flex justify-between text-xl md:text-2xl font-semibold text-text-primary pt-2 border-t border-border"><span>Total</span><span>${formatRp(total)}</span></div>
             </div>
             <div class="mt-4 flex items-center justify-center gap-1 text-text-muted text-sm">
               ${icon('lock', 'text-[16px]')}<span>Checkout Aman</span>
