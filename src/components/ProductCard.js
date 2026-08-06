@@ -10,7 +10,7 @@ export function ProductCard(p, opts = {}) {
       <div class="aspect-square bg-surface-low w-full relative">
         <img class="w-full h-full object-cover" src="${placeholder()}" alt="${p.name}" loading="lazy" />
         ${p.badge ? `<span class="absolute top-2 left-2 ${badgeCls} text-white px-2 py-0.5 rounded text-[10px] font-semibold uppercase">${p.badge}</span>` : ''}
-        <button aria-label="Favorit" class="absolute top-2 right-2 p-1 bg-surface/80 rounded-full text-text-muted hover:text-accent transition-colors">${icon('favorite', 'text-[18px]')}</button>
+        <button aria-label="Favorit" class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-full bg-surface/80 text-text-muted hover:text-accent transition-colors">${icon('favorite', 'text-[18px] leading-none')}</button>
       </div>
       <div class="p-2 flex flex-col gap-1 flex-grow justify-between">
         <div>
