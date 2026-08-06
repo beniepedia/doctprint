@@ -2,7 +2,7 @@ import { icon, formatRp, placeholder } from '../lib.js'
 
 export function ProductCard(p, opts = {}) {
   const { horizontal = false } = opts
-  const cardCls = horizontal ? 'flex-1 min-w-[160px] md:min-w-[200px]' : ''
+  const cardCls = horizontal ? 'w-[160px] md:w-[220px] shrink-0' : ''
   const badgeCls = p.badge === 'Sale' ? 'bg-error' : 'bg-accent-container'
 
   return `
@@ -20,11 +20,9 @@ export function ProductCard(p, opts = {}) {
             <span class="text-xs font-semibold text-text-muted">${p.rating}</span>
           </div>
         </div>
-        <div class="mt-2 flex items-center gap-2">
+        <div class="mt-2 flex flex-col">
           ${p.oldPrice ? `<p class="text-xs text-text-muted line-through">${formatRp(p.oldPrice)}</p>` : ''}
-          <p class="text-base font-bold text-text-primary">
-            ${formatRp(p.price)}<span class="text-xs font-normal text-text-muted"> ${p.unit}</span>
-          </p>
+          <p class="text-base font-bold text-text-primary">${formatRp(p.price)}</p>
         </div>
       </div>
     </a>`

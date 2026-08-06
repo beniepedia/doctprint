@@ -77,10 +77,14 @@ export default {
         </section>
 
         <!-- Rekomendasi -->
-        <section class="flex flex-col gap-4 px-4">
-          <h3 class="text-lg md:text-xl font-semibold text-text-primary">Rekomendasi untuk Anda</h3>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-            ${recommended.map((p) => ProductCard(p)).join('')}
+        <section class="flex flex-col gap-4 bg-surface py-6 border-y border-border">
+          <div class="px-4 flex justify-between items-center">
+            <h3 class="text-lg md:text-xl font-semibold text-text-primary">Rekomendasi untuk Anda</h3>
+          </div>
+          <div class="px-4 pb-4">
+            <div class="flex overflow-x-auto no-scrollbar gap-2 snap-x">
+              ${recommended.map((p) => ProductCard(p, { horizontal: true })).join('')}
+            </div>
           </div>
         </section>
       </main>
