@@ -43,10 +43,10 @@ src/
   main.js             # bootstrap + mount router
   style.css           # Tailwind import + design tokens (@theme)
   router.js           # hash router kecil
-  lib.js              # helper: icon, formatRp, placeholder, toast
-  data.js             # data mock (produk, kategori, menu)
+  lib.js              # helper: icon, formatRp, placeholder, toast, field, btnClass
+  data.js             # data mock (produk, kategori, menu, hero, ongkir, profil)
   state.js            # state keranjang + kalkulasi order
-  components/         # TopApp, BottomNav, ProductCard
+  components/         # TopApp, BottomNav, ProductCard, OrderSummary
   views/              # home, product, cart, checkout, profile
 docs/
   DESIGN.md           # design system & token warna + cara mengubah

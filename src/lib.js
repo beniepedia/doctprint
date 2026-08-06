@@ -24,6 +24,33 @@ export function placeholder() {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
 }
 
+const FIELD_BASE =
+  'rounded-lg border border-border-input p-4 text-base text-text-primary bg-transparent focus:border-primary focus:outline-none transition-all w-full'
+
+export function field({ label, id, type = 'text', required = false, options = null, placeholder = '' }) {
+  const control = options
+    ? `<select id="${id}" class="${FIELD_BASE} appearance-none">${placeholder ? `<option disabled selected>${placeholder}</option>` : ''}${options
+        .map((o) => `<option>${o}</option>`)
+        .join('')}</select>`
+    : `<input id="${id}" type="${type}" ${required ? 'required' : ''} ${placeholder ? `placeholder="${placeholder}"` : ''} class="${FIELD_BASE}" />`
+
+  return `
+    <div class="flex flex-col">
+      <label class="text-sm font-semibold text-text-muted mb-1" for="${id}">${label}</label>
+      ${control}
+    </div>`
+}
+
+const BTN_VARIANTS = {
+  primary: 'bg-accent text-white hover:opacity-90',
+  secondary: 'bg-surface border border-primary text-primary hover:bg-surface-low',
+  danger: 'bg-surface border border-error text-error hover:bg-error-container hover:border-error',
+}
+
+export function btnClass(variant = 'primary', extra = '') {
+  return `inline-flex items-center justify-center gap-2 rounded-lg text-base font-semibold py-3.5 px-4 transition-colors active:scale-95 ${BTN_VARIANTS[variant]} ${extra}`.trim()
+}
+
 export function toast(msg) {
   let el = document.querySelector('#toast')
   if (!el) {

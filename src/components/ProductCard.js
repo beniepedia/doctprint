@@ -2,7 +2,7 @@ import { icon, formatRp, placeholder } from '../lib.js'
 
 export function ProductCard(p, opts = {}) {
   const { horizontal = false } = opts
-  const cardCls = horizontal ? 'min-w-[160px] md:min-w-[200px]' : ''
+  const cardCls = horizontal ? 'flex-1 min-w-[160px] md:min-w-[200px]' : ''
   const badgeCls = p.badge === 'Sale' ? 'bg-error' : 'bg-accent-container'
 
   return `

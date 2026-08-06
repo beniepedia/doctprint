@@ -1,46 +1,19 @@
-import { BRAND, categories, products } from '../data.js'
+import { BRAND, categories, products, heroSlides } from '../data.js'
 import { icon } from '../lib.js'
-import { TopApp } from '../components/TopApp.js'
-import { BottomNav } from '../components/BottomNav.js'
+import { Layout } from '../components/Layout.js'
 import { ProductCard } from '../components/ProductCard.js'
 
 const newArrivals = products.slice(0, 3)
 const recommended = products.slice(3)
 
-const heroSlides = [
-  {
-    eyebrow: 'Promo Spesial',
-    title: 'Diskon Alat Kantor 20%',
-    desc: 'Printer, tinta, toner, kertas, dan aksesori kantor dengan harga bersahabat.',
-    cta: 'Pesan Sekarang',
-    href: '#/cart',
-    bg: 'linear-gradient(120deg, #0f172a 0%, #1e293b 50%, #f97316 125%)',
-  },
-  {
-    eyebrow: 'Koleksi Printer',
-    title: 'Printer Terbaik untuk Kantor Anda',
-    desc: 'EcoTank hemat tinta, PIXMA serbaguna, hingga kebutuhan cetak harian lainnya.',
-    cta: 'Lihat Produk',
-    href: '#/product?id=printer-ecotank-l3110',
-    bg: 'linear-gradient(120deg, #f97316 0%, #fd761a 55%, #ea580c 110%)',
-  },
-  {
-    eyebrow: 'Tinta & Toner Original',
-    title: 'Hasil Cetak Selalu Tajam',
-    desc: 'Cartridge dan toner original untuk performa terbaik setiap printer Anda.',
-    cta: 'Belanja Sekarang',
-    href: '#/product?id=toner-hp-85a',
-    bg: 'linear-gradient(120deg, #131b2e 0%, #0f172a 100%)',
-  },
-]
-
 export default {
   render() {
-    return `
-      ${TopApp({ title: BRAND, left: 'menu', right: 'search' })}
-
+    return Layout({
+      top: { title: BRAND, left: 'menu', right: 'search' },
+      active: 'home',
+      children: `
       <!-- Hero Slider (Full Bleed) -->
-      <section class="w-full pt-16">
+      <section class="w-full">
         <div data-hero-track class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth">
           ${heroSlides
             .map(
@@ -68,7 +41,7 @@ export default {
         </div>
       </section>
 
-      <main class="max-w-7xl mx-auto w-full flex flex-col gap-6 pb-6">
+      <main class="max-w-7xl mx-auto w-full flex flex-col gap-6">
         <!-- Kategori -->
         <section class="flex flex-col gap-3">
           <div class="px-4 flex justify-between items-center">
@@ -96,9 +69,10 @@ export default {
             <h3 class="text-lg md:text-xl font-semibold text-text-primary">Terbaru</h3>
             <button class="text-sm font-semibold text-accent-deep hover:underline">Lihat Semua</button>
           </div>
-          <div class="flex overflow-x-auto no-scrollbar gap-4 px-4 pb-4 snap-x">
-            ${newArrivals.map((p) => ProductCard(p, { horizontal: true })).join('')}
-            <div class="w-4 shrink-0"></div>
+          <div class="px-4 pb-4">
+            <div class="flex overflow-x-auto no-scrollbar gap-2 snap-x">
+              ${newArrivals.map((p) => ProductCard(p, { horizontal: true })).join('')}
+            </div>
           </div>
         </section>
 
@@ -110,9 +84,8 @@ export default {
           </div>
         </section>
       </main>
-
-      ${BottomNav('home')}
-    `
+      `,
+    })
   },
 
   mount(root) {

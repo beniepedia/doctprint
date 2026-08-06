@@ -1,6 +1,6 @@
-import { icon, formatRp, placeholder, toast } from '../lib.js'
-import { TopApp } from '../components/TopApp.js'
-import { BottomNav } from '../components/BottomNav.js'
+import { icon, formatRp, placeholder, toast, btnClass } from '../lib.js'
+import { Layout } from '../components/Layout.js'
+import { OrderSummary } from '../components/OrderSummary.js'
 import { state, cartProduct, orderTotals, changeQty, removeItem } from '../state.js'
 
 export default {
@@ -39,10 +39,23 @@ export default {
             })
             .join('')
 
-    return `
-      ${TopApp({ title: 'DoctPrint', left: 'menu', right: 'search' })}
+    const summaryFooter = `
+      <div class="mt-6 mb-6">
+        <label class="block text-sm font-semibold text-text-muted mb-1" for="promo">Kode Promo</label>
+        <div class="flex gap-2">
+          <input id="promo" class="w-full text-base bg-surface border border-border-input rounded-lg px-4 py-3 focus:border-primary focus:outline-none transition-all" placeholder="Masukkan kode" />
+          <button data-action="promo" class="px-4 py-2 border border-primary text-primary text-base font-semibold rounded-lg hover:bg-surface-low transition-colors whitespace-nowrap">Pakai</button>
+        </div>
+      </div>
+      <a href="#/checkout" class="${btnClass('primary', 'w-full shadow-sm')}">
+        <span>Lanjut ke Checkout</span>${icon('arrow_forward')}
+      </a>`
 
-      <main class="max-w-7xl mx-auto px-4 md:px-8 py-6 pt-16">
+    return Layout({
+      top: { title: 'DoctPrint', left: 'menu', right: 'search' },
+      active: 'cart',
+      children: `
+      <main class="max-w-7xl mx-auto px-4 md:px-8 py-6">
         <div class="mb-6">
           <h2 class="text-2xl md:text-4xl font-bold text-text-primary mb-1">Keranjang Anda</h2>
           <p class="text-base text-text-muted">${count} item di keranjang</p>
@@ -56,41 +69,20 @@ export default {
 
           <!-- Ringkasan -->
           <div class="md:col-span-4">
-            <div class="bg-surface rounded-lg p-6 border border-border sticky top-20">
-              <h3 class="text-lg md:text-xl font-semibold text-text-primary border-b border-border pb-4 mb-4">Ringkasan Pesanan</h3>
-              <div class="space-y-2 mb-6">
-                <div class="flex justify-between text-base text-text-muted"><span>Subtotal</span><span class="text-text-primary font-semibold">${formatRp(subtotal)}</span></div>
-                <div class="flex justify-between text-base text-text-muted"><span>Pengiriman</span><span class="text-text-primary font-semibold">Dihitung saat checkout</span></div>
-                <div class="flex justify-between text-base text-text-muted"><span>Estimasi Pajak</span><span class="text-text-primary font-semibold">${formatRp(tax)}</span></div>
-              </div>
-              <div class="border-t border-border pt-4 mb-6">
-                <div class="flex justify-between items-center">
-                  <span class="text-xl md:text-2xl font-bold text-text-primary">Total</span>
-                  <span class="text-xl md:text-2xl font-bold text-text-primary">${formatRp(total)}</span>
-                </div>
-              </div>
-
-              <div class="mb-6">
-                <label class="block text-sm font-semibold text-text-muted mb-1" for="promo">Kode Promo</label>
-                <div class="flex gap-2">
-                  <input id="promo" class="w-full text-base bg-surface border border-border-input rounded-lg px-4 py-3 focus:border-primary focus:outline-none transition-all" placeholder="Masukkan kode" />
-                  <button data-action="promo" class="px-4 py-2 border border-primary text-primary text-base font-semibold rounded-lg hover:bg-surface-low transition-colors whitespace-nowrap">Pakai</button>
-                </div>
-              </div>
-
-              <a href="#/checkout" class="bg-accent w-full py-3.5 rounded-lg text-base font-semibold text-white flex justify-center items-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
-                <span>Lanjut ke Checkout</span>${icon('arrow_forward')}
-              </a>
-              <div class="mt-4 flex items-center justify-center gap-1 text-text-muted text-sm">
-                ${icon('lock', 'text-[16px]')}<span>Checkout Aman</span>
-              </div>
-            </div>
+            ${OrderSummary({
+              subtotal,
+              tax,
+              total,
+              shipping: 'Dihitung saat checkout',
+              taxLabel: 'Estimasi Pajak',
+              footer: summaryFooter,
+              sticky: 'top-20',
+            })}
           </div>
         </div>
       </main>
-
-      ${BottomNav('cart')}
-    `
+      `,
+    })
   },
 
   mount(root) {

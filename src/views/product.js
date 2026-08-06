@@ -1,6 +1,6 @@
 import { products } from '../data.js'
-import { icon, formatRp, placeholder, toast } from '../lib.js'
-import { TopApp } from '../components/TopApp.js'
+import { icon, formatRp, placeholder, toast, btnClass } from '../lib.js'
+import { Layout } from '../components/Layout.js'
 import { addToCart } from '../state.js'
 
 const DEFAULT_ID = 'printer-ecotank-l3110'
@@ -10,10 +10,11 @@ export default {
     const id = params.get('id') || DEFAULT_ID
     const p = products.find((x) => x.id === id) || products[0]
 
-    return `
-      ${TopApp({ title: 'DoctPrint', left: '', right: 'search', onBack: true })}
-
-      <main class="max-w-7xl mx-auto px-4 md:px-8 py-6 pt-16">
+    return Layout({
+      top: { title: 'DoctPrint', left: '', right: 'search', onBack: true },
+      bottomNav: false,
+      children: `
+      <main class="max-w-7xl mx-auto px-4 md:px-8 py-6 pb-24">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- Galeri -->
           <div class="space-y-2">
@@ -82,10 +83,11 @@ export default {
 
       <!-- Sticky Action Bar -->
       <div class="fixed bottom-0 inset-x-0 z-50 bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] p-4 pb-safe flex gap-4">
-        <button data-action="add-to-cart" class="flex-1 py-3.5 bg-surface border border-primary rounded-lg text-base font-semibold text-primary hover:bg-surface-low transition-colors">Tambah ke Keranjang</button>
-        <button data-action="buy-now" class="flex-1 py-3.5 bg-accent rounded-lg text-base font-semibold text-white shadow-sm hover:opacity-90 transition-opacity">Beli Sekarang</button>
+        <button data-action="add-to-cart" class="${btnClass('secondary', 'flex-1')}">Tambah ke Keranjang</button>
+        <button data-action="buy-now" class="${btnClass('primary', 'flex-1')}">Beli Sekarang</button>
       </div>
-    `
+      `,
+    })
   },
 
   mount(root) {

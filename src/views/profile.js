@@ -1,33 +1,27 @@
-import { profileMenu } from '../data.js'
-import { icon, placeholder, toast } from '../lib.js'
-import { TopApp } from '../components/TopApp.js'
-import { BottomNav } from '../components/BottomNav.js'
-
-const stats = [
-  { icon: 'local_shipping', value: '2', label: 'Pesanan Aktif' },
-  { icon: 'favorite', value: '14', label: 'Wishlist' },
-  { icon: 'confirmation_number', value: '5', label: 'Kupon' },
-]
+import { profileMenu, user } from '../data.js'
+import { icon, placeholder, toast, btnClass } from '../lib.js'
+import { Layout } from '../components/Layout.js'
 
 export default {
   render() {
-    return `
-      ${TopApp({ title: 'DoctPrint', left: '', right: '' })}
-
-      <main class="w-full max-w-3xl mx-auto px-4 md:px-8 flex flex-col gap-6 pt-20 pb-8">
+    return Layout({
+      top: { title: 'DoctPrint', left: '', right: '' },
+      active: 'profile',
+      children: `
+      <main class="w-full max-w-3xl mx-auto px-4 md:px-8 flex flex-col gap-6 py-6">
         <!-- Kepala Profil -->
         <section class="flex flex-col items-center text-center mt-4">
           <div class="w-24 h-24 rounded-full bg-surface-top border-2 border-border mb-4 overflow-hidden relative shadow-sm flex items-center justify-center">
             <img class="w-full h-full object-cover" src="${placeholder()}" alt="Foto profil" />
           </div>
-          <h1 class="text-xl md:text-2xl font-bold text-primary">Budi Santoso</h1>
-          <p class="text-base text-text-muted">budi.santoso@email.com</p>
+          <h1 class="text-xl md:text-2xl font-bold text-primary">${user.name}</h1>
+          <p class="text-base text-text-muted">${user.email}</p>
           <button data-action="edit" class="mt-4 border border-border rounded bg-surface px-4 py-2 text-base font-semibold text-text-primary hover:bg-surface-low transition-colors shadow-sm">Edit Profil</button>
         </section>
 
         <!-- Ringkasan Akun -->
         <section class="grid grid-cols-3 gap-2 md:gap-4 mt-4">
-          ${stats
+          ${user.stats
             .map(
               (s) => `
               <div class="bg-surface border border-border rounded-lg p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-shadow">
@@ -57,14 +51,13 @@ export default {
 
         <!-- Keluar -->
         <section class="mt-6 mb-8">
-          <button data-action="logout" class="w-full bg-surface border border-error text-error rounded-lg py-3.5 text-base font-semibold hover:bg-error-container hover:border-error transition-colors flex items-center justify-center gap-2 shadow-sm active:scale-95 duration-150">
+          <button data-action="logout" class="${btnClass('danger', 'w-full shadow-sm')}">
             ${icon('logout', 'text-[20px]')} Keluar
           </button>
         </section>
       </main>
-
-      ${BottomNav('profile')}
-    `
+      `,
+    })
   },
 
   mount(root) {
