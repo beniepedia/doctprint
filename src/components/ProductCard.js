@@ -1,4 +1,4 @@
-import { icon, formatRp, placeholder } from '../lib.js'
+import { icon, formatRp, photo } from '../lib.js'
 
 export function ProductCard(p, opts = {}) {
   const { horizontal = false } = opts
@@ -8,7 +8,7 @@ export function ProductCard(p, opts = {}) {
   return `
     <a href="#/product?id=${p.id}" class="snap-start ${cardCls} bg-surface rounded-lg border border-border/60 flex flex-col overflow-hidden hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] transition-shadow duration-300">
       <div class="aspect-square bg-surface-low w-full relative">
-        <img class="w-full h-full object-cover" src="${placeholder()}" alt="${p.name}" loading="lazy" />
+        <img class="w-full h-full object-cover" src="${photo(p.id, 600, 600)}" alt="${p.name}" width="600" height="600" style="view-transition-name:pt-${p.id}" />
         ${p.badge ? `<span class="absolute top-2 left-2 ${badgeCls} text-white px-2 py-0.5 rounded text-[10px] font-semibold uppercase">${p.badge}</span>` : ''}
         ${p.stock === 0
           ? `<span class="absolute top-2 right-2 bg-text-primary/80 text-white px-2 py-0.5 rounded text-[10px] font-semibold uppercase">Stok Habis</span>`

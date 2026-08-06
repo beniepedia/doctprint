@@ -10,7 +10,7 @@ export function BottomNav(active) {
   ]
 
   return `
-    <nav class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-around items-center h-20 px-2 pb-safe" aria-label="Navigasi utama">
+    <nav style="view-transition-name:bottom-nav" class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-around items-center h-18 px-2 " aria-label="Navigasi utama">
       ${items
         .map((it) => {
           const isActive = it.id === active

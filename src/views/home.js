@@ -6,6 +6,9 @@ import { ProductCard } from '../components/ProductCard.js'
 const newArrivals = products.slice(0, 3)
 const recommended = products.slice(3)
 
+let heroTimer = null
+let heroControls = null
+
 export default {
   render() {
     return Layout({
@@ -19,7 +22,7 @@ export default {
             .map(
               (s) => `
               <div class="w-full shrink-0 snap-start h-[260px] md:h-[400px] relative overflow-hidden">
-                <div class="absolute inset-0" style="background:${s.bg}"></div>
+                <div class="absolute inset-0 anim-kenburns" style="background:${s.bg}"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent pointer-events-none"></div>
                 <div class="relative z-10 h-full flex flex-col items-start justify-end gap-2 px-4 md:px-8 py-6 md:py-10 text-on-primary">
                   <span class="text-xs font-semibold uppercase tracking-widest text-accent-soft">${s.eyebrow}</span>
@@ -109,5 +112,27 @@ export default {
         track?.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' })
       })
     })
+
+    if (track && track.children.length > 1) {
+      const advance = () => {
+        if (document.hidden) return
+        const idx = Math.round(track.scrollLeft / track.clientWidth)
+        const next = (idx + 1) % track.children.length
+        track.scrollTo({ left: track.clientWidth * next, behavior: 'smooth' })
+      }
+      const start = () => {
+        clearInterval(heroTimer)
+        heroTimer = setInterval(advance, 4000)
+      }
+      const stop = () => clearInterval(heroTimer)
+      start()
+      track.addEventListener('pointerdown', start)
+      track.addEventListener('pointerenter', stop)
+      track.addEventListener('pointerleave', start)
+      if (!heroControls) {
+        heroControls = () => (document.hidden ? stop() : start())
+        document.addEventListener('visibilitychange', heroControls)
+      }
+    }
   },
 }

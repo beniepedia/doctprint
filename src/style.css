@@ -103,3 +103,60 @@ input:focus,
 select:focus {
   box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
 }
+
+/* ============================================================
+ * Animations
+ * ============================================================ */
+.anim-kenburns {
+  animation: kenburns 12s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+::view-transition-old(root) {
+  animation: vt-out var(--vt-dur, 0.25s) ease both;
+}
+::view-transition-new(root) {
+  animation: vt-in var(--vt-dur, 0.3s) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+::view-transition-group(*) {
+  animation-duration: var(--vt-dur, 0.25s);
+}
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: var(--vt-dur, 0.25s);
+}
+
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--vt-x, 36px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-kenburns,
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
