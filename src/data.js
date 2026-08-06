@@ -15,7 +15,10 @@ export const products = [
     price: 2700000,
     oldPrice: null,
     rating: 4.9,
+    sold: 215,
+    stock: 12,
     badge: 'Terlaris',
+    video: 'https://www.youtube.com/watch?v=7_-NXb3sNEo',
     desc: 'Printer multifungsi print-scan-copy dengan teknologi EcoTank yang hemat tinta. Kapasitas tangki besar, cocok untuk kebutuhan cetak harian kantor maupun rumahan.',
     specs: [
       { icon: 'print', label: 'Print-Scan-Copy' },
@@ -28,6 +31,11 @@ export const products = [
       { label: 'Putih', hex: '#ffffff' },
     ],
     paperOptions: ['Single Function', 'Multi Function'],
+    reviews: [
+      { name: 'Andi Wijaya', rating: 5, date: '12 Jul 2026', comment: 'Hemat tinta dan hasil cetak tajam. Sangat cocok untuk kebutuhan kantor harian.' },
+      { name: 'Siti Rahma', rating: 5, date: '28 Jun 2026', comment: 'Instalasi mudah, koneksi cepat. Rekomendasi untuk print-scan-copy.' },
+      { name: 'Rudi Hartono', rating: 4, date: '02 Jun 2026', comment: 'Bagus, hanya butuh penyesuaian awal untuk warna. Selebihnya oke.' },
+    ],
   },
   {
     id: 'printer-canon-ip2770',
@@ -36,6 +44,8 @@ export const products = [
     price: 850000,
     oldPrice: null,
     rating: 4.7,
+    sold: 148,
+    stock: 7,
     badge: null,
     desc: 'Printer inkjet praktis untuk cetak dokumen dan foto. Ringkas, ringan, dan mudah digunakan dengan hasil cetak tajam.',
     specs: [
@@ -53,6 +63,8 @@ export const products = [
     price: 185000,
     oldPrice: 210000,
     rating: 4.8,
+    sold: 320,
+    stock: 25,
     badge: 'Sale',
     desc: 'Cartridge asli Canon untuk hasil cetak hitam pekat dan awet. Kompatibel dengan printer PIXMA iP2770 dan seri sejenis.',
     specs: [
@@ -65,6 +77,10 @@ export const products = [
       { label: 'Warna', hex: '#f97316' },
     ],
     paperOptions: ['Original', 'Compatible'],
+    reviews: [
+      { name: 'Dewi Lestari', rating: 5, date: '18 Jul 2026', comment: 'Cartridge original, hasil cetak hitam pekat dan awet.' },
+      { name: 'Bambang Pamungkas', rating: 4, date: '30 Jun 2026', comment: 'Harga lebih murah dari toko lain, kualitas terjamin.' },
+    ],
   },
   {
     id: 'toner-hp-85a',
@@ -73,6 +89,8 @@ export const products = [
     price: 320000,
     oldPrice: null,
     rating: 4.8,
+    sold: 190,
+    stock: 4,
     badge: 'Baru',
     desc: 'Toner original HP untuk hasil cetak bersih dan konsisten. Cocok untuk printer HP LaserJet P1102, M1132, dan sejenisnya.',
     specs: [
@@ -90,6 +108,8 @@ export const products = [
     price: 55000,
     oldPrice: 62000,
     rating: 4.7,
+    sold: 540,
+    stock: 60,
     badge: 'Promo',
     desc: 'Kertas HVS A4 premium 80gsm, putih bersih dan halus. Cocok untuk dokumen kantor, tugas, dan keperluan cetak sehari-hari.',
     specs: [
@@ -99,6 +119,10 @@ export const products = [
     ],
     colorOptions: [{ label: 'Putih', hex: '#ffffff' }],
     paperOptions: ['70gsm', '80gsm'],
+    reviews: [
+      { name: 'Nur Aini', rating: 5, date: '20 Jul 2026', comment: 'Kertas tebal dan putih bersih, cocok untuk dokumen penting.' },
+      { name: 'Fajar Nugroho', rating: 4, date: '11 Jul 2026', comment: 'Bagus, pengiriman cepat. Kertas tidak mudah lengket.' },
+    ],
   },
   {
     id: 'mouse-logitech-m170',
@@ -107,6 +131,8 @@ export const products = [
     price: 139000,
     oldPrice: null,
     rating: 4.6,
+    sold: 260,
+    stock: 3,
     badge: null,
     desc: 'Mouse wireless nirkabel yang nyaman digenggam. Koneksi stabil, baterai tahan lama hingga 12 bulan, plug-and-play tanpa driver.',
     specs: [
@@ -119,6 +145,10 @@ export const products = [
       { label: 'Abu', hex: '#cbd5e1' },
     ],
     paperOptions: ['Wired', 'Wireless'],
+    reviews: [
+      { name: 'Rina Kusuma', rating: 5, date: '15 Jul 2026', comment: 'Ringan dan nyaman, baterai benar-benar awet.' },
+      { name: 'Agus Salim', rating: 4, date: '05 Jul 2026', comment: 'Koneksi stabil, plug and play. Cocok untuk kerja harian.' },
+    ],
   },
   {
     id: 'keyboard-usb-standard',
@@ -127,6 +157,8 @@ export const products = [
     price: 75000,
     oldPrice: null,
     rating: 4.5,
+    sold: 180,
+    stock: 0,
     badge: null,
     desc: 'Keyboard USB standar dengan tombol nyaman dan awet. Plug-and-play, kompatibel dengan Windows, macOS, dan Linux.',
     specs: [
@@ -144,6 +176,8 @@ export const products = [
     price: 115000,
     oldPrice: null,
     rating: 4.9,
+    sold: 220,
+    stock: 15,
     badge: null,
     desc: 'Flashdisk Kingston kapasitas 32GB dengan transfer data cepat. Body kokoh, cocok untuk menyimpan dan memindahkan file kerja.',
     specs: [

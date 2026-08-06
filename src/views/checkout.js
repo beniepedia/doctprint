@@ -1,5 +1,6 @@
-import { formatRp, placeholder, toast, field, btnClass } from '../lib.js'
+import { formatRp, placeholder, toast, field } from '../lib.js'
 import { Layout } from '../components/Layout.js'
+import { Button } from '../components/Button.js'
 import { OrderSummary } from '../components/OrderSummary.js'
 import { state, cartProduct, orderTotals } from '../state.js'
 import { shippingOptions, provinces } from '../data.js'
@@ -83,7 +84,7 @@ export default {
             </div>
           </section>
 
-          <button data-action="continue" class="${btnClass('primary', 'w-full')}">Lanjut ke Pembayaran</button>
+          ${Button({ label: 'Lanjut ke Pembayaran', full: true, attrs: 'data-action="continue"' })}
         </div>
 
         <!-- Kolom Kanan: Ringkasan Pesanan -->

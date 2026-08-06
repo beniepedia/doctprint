@@ -1,6 +1,7 @@
 import { profileMenu, user } from '../data.js'
-import { icon, placeholder, toast, btnClass } from '../lib.js'
+import { icon, placeholder, toast } from '../lib.js'
 import { Layout } from '../components/Layout.js'
+import { Button } from '../components/Button.js'
 
 export default {
   render() {
@@ -16,7 +17,7 @@ export default {
           </div>
           <h1 class="text-xl md:text-2xl font-bold text-primary">${user.name}</h1>
           <p class="text-base text-text-muted">${user.email}</p>
-          <button data-action="edit" class="mt-4 border border-border rounded bg-surface px-4 py-2 text-base font-semibold text-text-primary hover:bg-surface-low transition-colors shadow-sm">Edit Profil</button>
+          ${Button({ label: 'Edit Profil', variant: 'outline', size: 'md', extra: 'mt-4 shadow-sm', attrs: 'data-action="edit"' })}
         </section>
 
         <!-- Ringkasan Akun -->
@@ -51,9 +52,7 @@ export default {
 
         <!-- Keluar -->
         <section class="mt-6 mb-8">
-          <button data-action="logout" class="${btnClass('danger', 'w-full shadow-sm')}">
-            ${icon('logout', 'text-[20px]')} Keluar
-          </button>
+          ${Button({ label: 'Keluar', variant: 'danger', icon: 'logout', full: true, extra: 'shadow-sm', attrs: 'data-action="logout"' })}
         </section>
       </main>
       `,

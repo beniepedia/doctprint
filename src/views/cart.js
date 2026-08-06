@@ -1,5 +1,6 @@
-import { icon, formatRp, placeholder, toast, btnClass } from '../lib.js'
+import { icon, formatRp, placeholder, toast } from '../lib.js'
 import { Layout } from '../components/Layout.js'
+import { Button } from '../components/Button.js'
 import { OrderSummary } from '../components/OrderSummary.js'
 import { state, cartProduct, orderTotals, changeQty, removeItem } from '../state.js'
 
@@ -44,12 +45,10 @@ export default {
         <label class="block text-sm font-semibold text-text-muted mb-1" for="promo">Kode Promo</label>
         <div class="flex gap-2">
           <input id="promo" class="w-full text-base bg-surface border border-border-input rounded-lg px-4 py-3 focus:border-primary focus:outline-none transition-all" placeholder="Masukkan kode" />
-          <button data-action="promo" class="px-4 py-2 border border-primary text-primary text-base font-semibold rounded-lg hover:bg-surface-low transition-colors whitespace-nowrap">Pakai</button>
+          ${Button({ label: 'Pakai', variant: 'secondary', size: 'sm', attrs: 'data-action="promo"' })}
         </div>
       </div>
-      <a href="#/checkout" class="${btnClass('primary', 'w-full shadow-sm')}">
-        <span>Lanjut ke Checkout</span>${icon('arrow_forward')}
-      </a>`
+      ${Button({ label: 'Lanjut ke Checkout', href: '#/checkout', icon: 'arrow_forward', full: true, extra: 'shadow-sm' })}`
 
     return Layout({
       top: { title: 'DoctPrint', left: 'menu', right: 'search' },

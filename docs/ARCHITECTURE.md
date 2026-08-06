@@ -7,13 +7,14 @@ src/
   main.js             # Entry point: import CSS + mount router ke #app
   style.css           # @import "tailwindcss" + @theme (design tokens)
   router.js           # Hash router: parses #/path + kueri, lalu render view
-  lib.js              # helper umum: icon(), formatRp(), placeholder(), toast(), field(), btnClass()
+  lib.js              # helper umum: icon(), formatRp(), placeholder(), toast(), field()
   data.js             # data mock (BRAND, categories, products, heroSlides, shippingOptions, provinces, user)
   state.js            # state keranjang + operasi & kalkulasi order
   components/         # komponen UI yang dipakai ulang (pure function → string HTML)
     Layout.js         #   shell halaman: TopApp + slot konten + BottomNav (opsional)
     TopApp.js         #   header atas (menu/back + brand + search)
     BottomNav.js      #   navigasi bawah (mobile), badge jumlah keranjang
+    Button.js         #   tombol (variant primary/secondary/danger/outline/ghost, size sm/md/lg)
     ProductCard.js    #   kartu produk (mode horizontal & grid)
     OrderSummary.js   #   ringkasan pesanan (dipakai cart & checkout)
   views/              # satu file per screen (route)
@@ -77,6 +78,10 @@ setiap kali hash berubah. Untuk interaksi ringan, tandai elemen dengan `data-act
 
 Buat file di `src/components/`. Komponen adalah **pure function** yang mengembalikan string HTML
 dan menerima data lewat argumen (mis. `ProductCard(product, { horizontal })`), tanpa state internal.
+
+Contoh `Button`: `Button({ label, variant = 'primary', size = 'md', href, icon, full, extra, attrs })`.
+`variant` mengatur warna (`primary | secondary | danger | outline | ghost`), `size` mengatur
+ukuran (`sm | md | lg`); isi `href` untuk render `<a>`, `attrs` untuk `data-action`/`aria-label`.
 
 ## Menambah / Mengubah Data
 
