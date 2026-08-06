@@ -73,7 +73,7 @@ export default {
             <button class="text-sm font-semibold text-accent-deep hover:underline">Lihat Semua</button>
           </div>
           <div class="px-4 pb-4">
-            <div class="flex overflow-x-auto no-scrollbar gap-2 snap-x">
+            <div data-carousel="terbaru" class="flex overflow-x-auto no-scrollbar gap-2 snap-x">
               ${newArrivals.map((p) => ProductCard(p, { horizontal: true })).join('')}
             </div>
           </div>
@@ -85,7 +85,7 @@ export default {
             <h3 class="text-lg md:text-xl font-semibold text-text-primary">Rekomendasi untuk Anda</h3>
           </div>
           <div class="px-4 pb-4">
-            <div class="flex overflow-x-auto no-scrollbar gap-2 snap-x">
+            <div data-carousel="rekomendasi" class="flex overflow-x-auto no-scrollbar gap-2 snap-x">
               ${recommended.map((p) => ProductCard(p, { horizontal: true })).join('')}
             </div>
           </div>
