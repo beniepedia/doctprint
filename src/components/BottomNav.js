@@ -1,16 +1,15 @@
-import { icon } from '../lib.js'
 import { cartCount } from '../state.js'
 
 export function BottomNav(active) {
   const items = [
     { id: 'home', label: 'Beranda', icon: 'home', href: '#/home' },
-    { id: 'shop', label: 'Belanja', icon: 'storefront', href: '#/home' },
+    { id: 'shop', label: 'Belanja', icon: 'storefront', href: '#/shop' },
     { id: 'cart', label: 'Keranjang', icon: 'shopping_cart', href: '#/cart', badge: cartCount() },
     { id: 'profile', label: 'Profil', icon: 'person', href: '#/profile' },
   ]
 
   return `
-    <nav style="view-transition-name:bottom-nav" class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-around items-center h-18 px-2 " aria-label="Navigasi utama">
+    <nav style="view-transition-name:bottom-nav" class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-around items-center h-18 px-2 pb-safe" aria-label="Navigasi utama">
       ${items
         .map((it) => {
           const isActive = it.id === active

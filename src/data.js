@@ -10,6 +10,7 @@ export const categories = [
 export const products = [
   {
     id: 'printer-ecotank-l3110',
+    categoryId: 'printer',
     name: 'Printer Epson EcoTank L3110',
     unit: '/unit',
     price: 2700000,
@@ -39,6 +40,7 @@ export const products = [
   },
   {
     id: 'printer-canon-ip2770',
+    categoryId: 'printer',
     name: 'Printer Canon PIXMA iP2770',
     unit: '/unit',
     price: 850000,
@@ -58,6 +60,7 @@ export const products = [
   },
   {
     id: 'cartridge-canon-pg-47',
+    categoryId: 'tinta',
     name: 'Cartridge Canon PG-47 (Hitam)',
     unit: '/pcs',
     price: 185000,
@@ -84,6 +87,7 @@ export const products = [
   },
   {
     id: 'toner-hp-85a',
+    categoryId: 'tinta',
     name: 'Toner HP 85A (CE285A)',
     unit: '/pcs',
     price: 320000,
@@ -103,6 +107,7 @@ export const products = [
   },
   {
     id: 'kertas-a4-80gsm',
+    categoryId: 'kertas',
     name: 'Kertas A4 80gsm',
     unit: '/rim',
     price: 55000,
@@ -126,6 +131,7 @@ export const products = [
   },
   {
     id: 'mouse-logitech-m170',
+    categoryId: 'aksesori',
     name: 'Mouse Wireless Logitech M170',
     unit: '/unit',
     price: 139000,
@@ -152,6 +158,7 @@ export const products = [
   },
   {
     id: 'keyboard-usb-standard',
+    categoryId: 'aksesori',
     name: 'Keyboard USB Standard',
     unit: '/unit',
     price: 75000,
@@ -171,6 +178,7 @@ export const products = [
   },
   {
     id: 'flashdisk-kingston-32gb',
+    categoryId: 'aksesori',
     name: 'Flashdisk Kingston 32GB',
     unit: '/unit',
     price: 115000,
