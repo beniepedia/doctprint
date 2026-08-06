@@ -8,6 +8,12 @@ const state = {
   q: '',
   category: 'all',
 }
+let shopRouteWatcher = false
+
+function resetShopState() {
+  state.q = ''
+  state.category = 'all'
+}
 
 function normalize(v) {
   return String(v || '').toLowerCase().trim()
@@ -73,40 +79,34 @@ function renderFeatured() {
 export default {
   render() {
     const list = filteredProducts()
+    const hasFilters = normalize(state.q) || state.category !== 'all'
+
+    if (!shopRouteWatcher) {
+      shopRouteWatcher = true
+      window.addEventListener('hashchange', () => {
+        if (!location.hash.startsWith('#/shop')) resetShopState()
+      })
+    }
 
     return Layout({
       top: { title: 'Belanja Produk', left: 'menu', right: 'search' },
       active: 'shop',
       children: `
         <main class="max-w-7xl mx-auto w-full flex flex-col gap-6 px-4 py-6">
-          <section class="bg-surface rounded-2xl border border-border p-4 shadow-sm flex flex-col gap-4">
-            <div class="space-y-3">
-              <div class="flex items-end justify-between gap-3">
-                <div>
-                  <p class="text-sm font-semibold text-text-primary">Cari produk</p>
-                  <p class="text-xs text-text-muted">Temukan item berdasarkan nama atau deskripsi.</p>
-                </div>
-                <button data-reset class="text-sm font-semibold text-accent-deep hover:underline shrink-0">Reset</button>
+          <section class="flex flex-col gap-4">
+            <label class="group block">
+              <span class="sr-only">Cari produk</span>
+              <div class="flex items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3 shadow-sm transition-all duration-200 focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(15,23,42,0.08)]">
+                <span class="w-10 h-10 rounded-xl bg-surface-low text-text-muted flex items-center justify-center shrink-0 border border-border/70">
+                  ${icon('search', 'text-[20px]')}
+                </span>
+                <input data-search value="${state.q}" type="search" placeholder="Cari produk" class="w-full appearance-none border-0 bg-transparent p-0 text-[15px] leading-6 font-medium text-text-primary placeholder:text-text-muted focus:ring-0 focus:outline-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none" />
+                <button data-reset type="button" aria-label="Reset filter" class="${hasFilters ? '' : 'hidden '}w-9 h-9 rounded-full bg-surface-low text-text-muted border border-border hover:text-text-primary hover:bg-surface-mid flex items-center justify-center transition-colors shrink-0">${icon('restart_alt', 'text-[18px]')}</button>
               </div>
+            </label>
+          </section>
 
-              <label class="group block">
-                <span class="sr-only">Cari produk</span>
-                <div class="flex items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3 shadow-sm transition-all duration-200 focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(15,23,42,0.08)]">
-                  <span class="w-10 h-10 rounded-xl bg-surface-low text-text-muted flex items-center justify-center shrink-0 border border-border/70">
-                    ${icon('search', 'text-[20px]')}
-                  </span>
-                  <input data-search value="${state.q}" type="search" placeholder="Cari produk" class="w-full appearance-none border-0 bg-transparent p-0 text-[15px] leading-6 font-medium text-text-primary placeholder:text-text-muted focus:ring-0 focus:outline-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none" />
-                  ${state.q ? `<button data-clear-search type="button" aria-label="Hapus pencarian" class="w-9 h-9 rounded-full bg-surface-low text-text-muted border border-border hover:text-text-primary hover:bg-surface-mid flex items-center justify-center transition-colors shrink-0">${icon('close', 'text-[18px]')}</button>` : ''}
-                </div>
-              </label>
-            </div>
-
-            <div class="flex items-center justify-between gap-3 flex-wrap">
-              <div>
-                <p class="text-sm font-semibold text-text-primary">Filter cepat</p>
-                <p class="text-xs text-text-muted">Pilih kategori untuk mempersempit hasil katalog.</p>
-              </div>
-            </div>
+          <section>
             <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">${renderChips()}</div>
           </section>
 
@@ -153,6 +153,7 @@ export default {
 
   mount(root) {
     const search = root.querySelector('[data-search]')
+    const resetBtn = root.querySelector('[data-reset]')
     const resultCount = root.querySelector('[data-result-count]')
     const resultList = root.querySelector('[data-result-list]')
     const clearSearch = () => {
@@ -164,7 +165,9 @@ export default {
 
     const update = () => {
       const list = filteredProducts()
+      const hasFiltersNow = normalize(state.q) || state.category !== 'all'
       if (resultCount) resultCount.textContent = `${list.length} produk ditemukan`
+      if (resetBtn) resetBtn.classList.toggle('hidden', !hasFiltersNow)
       if (resultList) {
         resultList.innerHTML = list.length
           ? `<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">${list.map((p) => ProductCard(p)).join('')}</div>`
@@ -206,6 +209,15 @@ export default {
       search.addEventListener('input', (e) => {
         state.q = e.target.value
         update()
+      })
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        resetShopState()
+        if (search) search.value = ''
+        update()
+        search?.focus()
       })
     }
 
