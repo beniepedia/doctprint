@@ -56,8 +56,6 @@
       // Force CSS transition by toggling a class
       document.documentElement.classList.add('transitioning')
       setTimeout(() => document.documentElement.classList.remove('transitioning'), 100)
-      // Reset scroll before navigate
-      window.scrollTo(0, 0)
       location.hash = targetHash
       return
     }
@@ -69,16 +67,15 @@
 
     isNavigating = true
     
-    // Reset scroll BEFORE transition
-    window.scrollTo(0, 0)
-    console.log('  -> scroll reset to 0 (before)')
-    
     // Check for view-transition-name elements
     const elements = document.querySelectorAll('[style*="view-transition-name"]')
     console.log('  view-transition-name elements:', elements.length)
     
+    // Start view transition and reset scroll during the transition
     const transition = document.startViewTransition(() => {
       console.log('  -> startViewTransition callback')
+      // Reset scroll during transition (critical!)
+      window.scrollTo(0, 0)
       location.hash = targetHash
     })
     
@@ -89,11 +86,6 @@
     transition.finished.then(() => {
       console.log('  -> transition finished')
       isNavigating = false
-      // Double-check scroll reset after animation
-      if (window.scrollY !== 0) {
-        console.log('  -> scroll corrected to 0 (after)')
-        window.scrollTo(0, 0)
-      }
     })
   }
 
