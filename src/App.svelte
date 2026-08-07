@@ -18,6 +18,11 @@
     profile: 'Profil',
   }
 
+  // Saved scroll positions per route
+  const savedScroll = {}
+  const routeRank = { home: 0, shop: 1, product: 2, cart: 3, checkout: 4, profile: 5 }
+  let lastRoute = null
+
   let route = 'home'
   let isNavigating = false
 
@@ -47,13 +52,12 @@
       return
     }
     
-    const back = (routes[next] ? 0 : 0) < (routes[route] ? 0 : 0)
+    const back = (routeRank[next] ?? 0) < (routeRank[route] ?? 0)
     
     if (!supportsViewTransition) {
       console.log('  -> vanilla fallback (no API support)')
       document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
       document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
-      // Force CSS transition by toggling a class
       document.documentElement.classList.add('transitioning')
       setTimeout(() => document.documentElement.classList.remove('transitioning'), 100)
       location.hash = targetHash
@@ -67,6 +71,10 @@
 
     isNavigating = true
     
+    // Save current scroll position before navigating
+    savedScroll[route] = window.scrollY
+    console.log('  -> saved scroll for route', route, ':', window.scrollY)
+    
     // Check for view-transition-name elements
     const elements = document.querySelectorAll('[style*="view-transition-name"]')
     console.log('  view-transition-name elements:', elements.length)
@@ -74,9 +82,16 @@
     // Start view transition and reset scroll during the transition
     const transition = document.startViewTransition(() => {
       console.log('  -> startViewTransition callback')
-      // Reset scroll during transition (critical!)
-      window.scrollTo(0, 0)
-      console.log('  -> scroll reset inside callback')
+      if (back) {
+        // Navigate back: restore saved scroll position
+        const saved = savedScroll[next] ?? 0
+        console.log('  -> restoring scroll for', next, ':', saved)
+        window.scrollTo(0, saved)
+      } else {
+        // Navigate forward: reset scroll to 0
+        console.log('  -> reset scroll to 0 (forward)')
+        window.scrollTo(0, 0)
+      }
       location.hash = targetHash
     })
     
@@ -86,6 +101,8 @@
     
     transition.finished.then(() => {
       console.log('  -> transition finished')
+      lastRoute = route
+      route = next
       isNavigating = false
     })
   }
