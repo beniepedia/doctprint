@@ -106,7 +106,14 @@
       }
     }
 
+    // Also listen for pointerdown for more reliable detection
+    function handlePointerDown(e) {
+      const link = e.target.closest('a')
+      console.log('handlePointerDown:', e.target.tagName, link?.href)
+    }
+
     document.addEventListener('click', handleLinkClick)
+    document.addEventListener('pointerdown', handlePointerDown)
 
     const onHashChange = () => syncRoute()
     window.addEventListener('hashchange', onHashChange)
