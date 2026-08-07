@@ -114,6 +114,8 @@
 
     document.addEventListener('click', handleLinkClick)
     document.addEventListener('pointerdown', handlePointerDown)
+    
+    console.log('Event listeners registered: click, pointerdown, hashchange')
 
     const onHashChange = () => syncRoute()
     window.addEventListener('hashchange', onHashChange)
@@ -123,7 +125,7 @@
     }
   })
 
-  // Test function to trigger animation directly
+  // Test function to trigger animation directly (for debugging)
   function testTransition() {
     navigateWithTransition('#/shop')
   }
