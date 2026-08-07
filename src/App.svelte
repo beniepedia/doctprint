@@ -123,6 +123,11 @@
     }
   })
 
+  // Test function to trigger animation directly
+  function testTransition() {
+    navigateWithTransition('#/shop')
+  }
+
   $: title = routes[route] || 'DoctPrint'
   $: cartSize = $cart.length
 </script>
