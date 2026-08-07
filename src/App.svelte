@@ -54,57 +54,30 @@
     
     const back = (routeRank[next] ?? 0) < (routeRank[route] ?? 0)
     
-    if (!supportsViewTransition) {
-      console.log('  -> vanilla fallback (no API support)')
-      document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
-      document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
-      document.documentElement.classList.add('transitioning')
-      setTimeout(() => document.documentElement.classList.remove('transitioning'), 100)
-      location.hash = targetHash
-      return
-    }
-
-    console.log('  -> starting view transition (back:', back + ')')
-
+    // Always use CSS fallback for reliable scroll behavior
+    console.log('  -> using CSS fallback (reliable scroll)')
+    document.documentElement.classList.add('transitioning')
     document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
     document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
-
-    isNavigating = true
     
-    // Save current scroll position before navigating
+    // Save current scroll position
     savedScroll[route] = window.scrollY
     console.log('  -> saved scroll for route', route, ':', window.scrollY)
     
-    // Check for view-transition-name elements
-    const elements = document.querySelectorAll('[style*="view-transition-name"]')
-    console.log('  view-transition-name elements:', elements.length)
-    
-    // Start view transition and reset scroll during the transition
-    const transition = document.startViewTransition(() => {
-      console.log('  -> startViewTransition callback')
+    setTimeout(() => {
       if (back) {
-        // Navigate back: restore saved scroll position
         const saved = savedScroll[next] ?? 0
         console.log('  -> restoring scroll for', next, ':', saved)
         window.scrollTo(0, saved)
       } else {
-        // Navigate forward: reset scroll to 0
         console.log('  -> reset scroll to 0 (forward)')
         window.scrollTo(0, 0)
       }
       location.hash = targetHash
-    })
-    
-    transition.ready.then(() => {
-      console.log('  -> transition ready')
-    })
-    
-    transition.finished.then(() => {
-      console.log('  -> transition finished')
-      lastRoute = route
-      route = next
-      isNavigating = false
-    })
+      setTimeout(() => {
+        document.documentElement.classList.remove('transitioning')
+      }, 100)
+    }, 50)
   }
 
   onMount(() => {
@@ -159,23 +132,25 @@
 </script>
 
 <DefaultLayout {route} {title} {cartSize} onBack={route === 'product'} showBottomNav={route !== 'product'}>
-  {#if route === 'home'}
-    <HomePage />
-  {:else if route === 'shop'}
-    <ShopPage />
-  {:else if route === 'product'}
-    <ProductPage />
-  {:else if route === 'cart'}
-    <CartPage />
-  {:else if route === 'checkout'}
-    <CheckoutPage />
-  {:else if route === 'profile'}
-    <ProfilePage />
-  {:else}
-    <div class="max-w-7xl mx-auto w-full px-4 py-6">
-      <div class="rounded-2xl border border-border bg-surface p-6 text-text-muted">
-        Route aktif: <span class="font-semibold text-text-primary">{route}</span>
+  <div id="page-container" class="min-h-screen">
+    {#if route === 'home'}
+      <HomePage />
+    {:else if route === 'shop'}
+      <ShopPage />
+    {:else if route === 'product'}
+      <ProductPage />
+    {:else if route === 'cart'}
+      <CartPage />
+    {:else if route === 'checkout'}
+      <CheckoutPage />
+    {:else if route === 'profile'}
+      <ProfilePage />
+    {:else}
+      <div class="max-w-7xl mx-auto w-full px-4 py-6">
+        <div class="rounded-2xl border border-border bg-surface p-6 text-text-muted">
+          Route aktif: <span class="font-semibold text-text-primary">{route}</span>
+        </div>
       </div>
-    </div>
-  {/if}
+    {/if}
+  </div>
 </DefaultLayout>
