@@ -76,6 +76,7 @@
       console.log('  -> startViewTransition callback')
       // Reset scroll during transition (critical!)
       window.scrollTo(0, 0)
+      console.log('  -> scroll reset inside callback')
       location.hash = targetHash
     })
     
