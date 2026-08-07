@@ -161,6 +161,14 @@ input[type='search']::-webkit-search-results-decoration {
   }
 }
 
+/* Fallback animasi jika view transition API tidak support */
+.transitioning ::view-transition-old(root) {
+  animation: vt-out 0.35s ease both;
+}
+.transitioning ::view-transition-new(root) {
+  animation: vt-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .anim-kenburns,
   ::view-transition-old(root),
