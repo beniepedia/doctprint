@@ -76,7 +76,7 @@
   })
 </script>
 
-<section class="w-full">
+<section style="view-transition-name:home" class="w-full">
   <div bind:this={track} class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth">
     {#each heroSlides as s}
       <div class="w-full shrink-0 snap-start h-[260px] md:h-[400px] relative overflow-hidden">
