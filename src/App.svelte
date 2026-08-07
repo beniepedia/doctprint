@@ -35,12 +35,10 @@
     const next = targetHash.replace(/^#\/?/, '')?.split('?')[0] || 'home'
     if (next === route || !document.startViewTransition) {
       location.hash = targetHash
-      console.log('View transition skipped:', next === route ? 'same route' : 'API not supported')
       return
     }
 
     const back = (routes[next] ? 0 : 0) < (routes[route] ? 0 : 0)
-    console.log('Starting view transition from', route, 'to', next, '(back:', back + ')')
 
     document.documentElement.style.setProperty('--vt-x', back ? '-36px' : '36px')
     document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
@@ -48,12 +46,9 @@
     isNavigating = true
     document.startViewTransition(() => {
       location.hash = targetHash
-    }).then(() => console.log('View transition completed'))
-      .catch(e => console.error('View transition error:', e))
-      .finally(() => {
-        isNavigating = false
-        console.log('Navigation finished')
-      })
+    }).finally(() => {
+      isNavigating = false
+    })
   }
 
   onMount(() => {
