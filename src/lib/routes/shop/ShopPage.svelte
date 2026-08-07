@@ -14,7 +14,7 @@
   })
 </script>
 
-<section class="max-w-7xl mx-auto w-full px-4 py-6 flex flex-col gap-5">
+<section style="view-transition-name:shop" class="max-w-7xl mx-auto w-full px-4 py-6 flex flex-col gap-5">
   <div class="flex items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3 shadow-sm focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(15,23,42,0.08)]">
     <span class="w-10 h-10 rounded-xl bg-surface-low text-text-muted flex items-center justify-center shrink-0 border border-border/70"><Icon name="search" className="text-[20px]" /></span>
     <input bind:value={q} type="search" placeholder="Cari produk" class="w-full appearance-none border-0 bg-transparent p-0 text-[15px] leading-6 font-medium text-text-primary placeholder:text-text-muted focus:ring-0 focus:outline-none" />

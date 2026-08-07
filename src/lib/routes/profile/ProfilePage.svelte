@@ -6,7 +6,7 @@
     'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="600"%3E%3Crect width="600" height="600" fill="%23eef1f5"/%3E%3Ccircle cx="300" cy="240" r="110" fill="%23d7dde5"/%3E%3Crect x="150" y="380" width="300" height="130" rx="65" fill="%23d7dde5"/%3E%3C/svg%3E'
 </script>
 
-<section class="w-full max-w-3xl mx-auto px-4 md:px-8 flex flex-col gap-6 py-6">
+<section style="view-transition-name:profile" class="w-full max-w-3xl mx-auto px-4 md:px-8 flex flex-col gap-6 py-6">
   <section class="flex flex-col items-center text-center mt-4">
     <div class="w-24 h-24 rounded-full bg-surface-top border-2 border-border mb-4 overflow-hidden relative shadow-sm flex items-center justify-center">
       <img class="w-full h-full object-cover" src={placeholder} alt="Foto profil" />
