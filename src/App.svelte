@@ -39,13 +39,7 @@
   function navigateWithTransition(targetHash) {
     const next = targetHash.replace(/^#\/?/, '')?.split('?')[0] || 'home'
     
-    console.log('navigateWithTransition called')
-    console.log('  targetHash:', targetHash)
-    console.log('  next:', next)
-    console.log('  current route:', route)
-    
     if (next === route) {
-      console.log('  -> skipping (same route)')
       location.hash = targetHash
       return
     }
@@ -54,7 +48,6 @@
     
     // Save current scroll position BEFORE any changes
     savedScroll[route] = window.scrollY
-    console.log('  -> saved scroll for route', route, ':', window.scrollY)
     
     // Set CSS variables for animation
     document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
@@ -67,10 +60,8 @@
       requestAnimationFrame(() => {
         if (back) {
           const saved = savedScroll[next] ?? 0
-          console.log('  -> restoring scroll for', next, ':', saved)
           window.scrollTo(0, saved)
         } else {
-          console.log('  -> reset scroll to 0 (forward)')
           window.scrollTo(0, 0)
         }
       })
@@ -88,17 +79,11 @@
   onMount(() => {
     syncRoute()
 
-    // Check if view transition API is supported
-    const supportsViewTransition = 'startViewTransition' in document
-    console.log('onMount - View transition supported:', supportsViewTransition)
-
     // Handle navigation with view transition
     function handleLinkClick(e) {
       const link = e.target.closest('a')
-      console.log('handleLinkClick:', e.target.tagName, link?.href)
       if (!link) return
       const href = link.getAttribute('href')
-      console.log('  href:', href, 'starts with #/:', href?.startsWith('#/'))
       if (href?.startsWith('#/') && !link.getAttribute('target')) {
         e.preventDefault()
         navigateWithTransition(href)
@@ -108,16 +93,12 @@
     // Also listen for pointerdown for more reliable detection
     function handlePointerDown(e) {
       const link = e.target.closest('a')
-      console.log('handlePointerDown:', e.target.tagName, link?.href)
     }
 
     document.addEventListener('click', handleLinkClick)
     document.addEventListener('pointerdown', handlePointerDown)
-    
-    console.log('Event listeners registered: click, pointerdown, hashchange')
 
     const onHashChange = () => {
-      console.log('onHashChange: location.hash =', location.hash)
       syncRoute()
     }
     window.addEventListener('hashchange', onHashChange)
