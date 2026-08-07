@@ -47,16 +47,19 @@
       return
     }
     
+    const back = (routes[next] ? 0 : 0) < (routes[route] ? 0 : 0)
+    
     if (!supportsViewTransition) {
-      console.log('  -> skipping (API not supported)')
+      console.log('  -> vanilla fallback (no API support)')
+      document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
+      document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
       location.hash = targetHash
       return
     }
 
-    const back = (routes[next] ? 0 : 0) < (routes[route] ? 0 : 0)
     console.log('  -> starting view transition (back:', back + ')')
 
-    document.documentElement.style.setProperty('--vt-x', back ? '-36px' : '36px')
+    document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
     document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
 
     isNavigating = true
@@ -90,8 +93,10 @@
     // Handle navigation with view transition
     function handleLinkClick(e) {
       const link = e.target.closest('a')
+      console.log('handleLinkClick:', e.target.tagName, link?.href)
       if (!link) return
       const href = link.getAttribute('href')
+      console.log('  href:', href, 'starts with #/:', href?.startsWith('#/'))
       if (href?.startsWith('#/') && !link.getAttribute('target')) {
         e.preventDefault()
         navigateWithTransition(href)
