@@ -28,14 +28,46 @@
     track.scrollTo({ left: track.clientWidth * next, behavior: 'smooth' })
   }
 
+  function goToSlide(index) {
+    if (!track) return
+    track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' })
+  }
+
   onMount(() => {
     if (track && track.children.length > 1) {
+      // Start auto-play
       heroTimer = setInterval(advance, 4000)
+      
+      // Sync dots on scroll
       track.addEventListener('scroll', syncDots)
+      
+      // Auto-pause on interaction
+      const start = () => {
+        if (document.hidden) return
+        if (heroTimer) return
+        heroTimer = setInterval(advance, 4000)
+      }
+      const stop = () => {
+        if (heroTimer) {
+          clearInterval(heroTimer)
+          heroTimer = null
+        }
+      }
+      track.addEventListener('pointerdown', stop)
+      track.addEventListener('pointerenter', stop)
+      track.addEventListener('pointerleave', start)
+      
+      // Document visibility handler
       if (!heroControls) {
-        heroControls = () => (document.hidden ? clearInterval(heroTimer) : (heroTimer = setInterval(advance, 4000)))
+        heroControls = () => (document.hidden ? stop() : start())
         document.addEventListener('visibilitychange', heroControls)
       }
+      
+      // Setup click handlers for dots
+      const dots = document.querySelectorAll('[data-slide]')
+      dots.forEach((btn, i) => {
+        btn.addEventListener('click', () => goToSlide(i))
+      })
     }
     return () => {
       clearInterval(heroTimer)
