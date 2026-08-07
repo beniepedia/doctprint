@@ -79,7 +79,7 @@
 <section style="view-transition-name:home" class="w-full">
   <div bind:this={track} class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth">
     {#each heroSlides as s}
-      <div class="w-full shrink-0 snap-start h-[260px] md:h-[400px] relative overflow-hidden">
+      <div class="w-full shrink-0 snap-start h-[260px] md:h-[400px] relative overflow-hidden" style="view-transition-name:hero-{s.id}">
         <div class="absolute inset-0 anim-kenburns" style={`background:${s.bg}`}></div>
         <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent pointer-events-none"></div>
         <div class="relative z-10 h-full flex flex-col items-start justify-end gap-2 px-4 md:px-8 py-6 md:py-10 text-on-primary">
