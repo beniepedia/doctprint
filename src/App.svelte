@@ -59,6 +59,10 @@
   onMount(() => {
     syncRoute()
 
+    // Check if view transition API is supported
+    const supportsViewTransition = 'startViewTransition' in document
+    console.log('View transition supported:', supportsViewTransition)
+
     // Handle navigation with view transition
     function handleLinkClick(e) {
       const link = e.target.closest('a')
