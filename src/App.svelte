@@ -38,13 +38,11 @@
 
   function navigateWithTransition(targetHash) {
     const next = targetHash.replace(/^#\/?/, '')?.split('?')[0] || 'home'
-    const supportsViewTransition = 'startViewTransition' in document
     
     console.log('navigateWithTransition called')
     console.log('  targetHash:', targetHash)
     console.log('  next:', next)
     console.log('  current route:', route)
-    console.log('  supportsViewTransition:', supportsViewTransition)
     
     if (next === route) {
       console.log('  -> skipping (same route)')
@@ -54,30 +52,37 @@
     
     const back = (routeRank[next] ?? 0) < (routeRank[route] ?? 0)
     
-    // Always use CSS fallback for reliable scroll behavior
-    console.log('  -> using CSS fallback (reliable scroll)')
-    document.documentElement.classList.add('transitioning')
-    document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
-    document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
-    
-    // Save current scroll position
+    // Save current scroll position BEFORE any changes
     savedScroll[route] = window.scrollY
     console.log('  -> saved scroll for route', route, ':', window.scrollY)
     
+    // Set CSS variables for animation
+    document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
+    document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
+    document.documentElement.classList.add('transitioning')
+    
+    // Reset scroll IMMEDIATELY (before animation)
+    // Use requestAnimationFrame to ensure it happens before paint
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (back) {
+          const saved = savedScroll[next] ?? 0
+          console.log('  -> restoring scroll for', next, ':', saved)
+          window.scrollTo(0, saved)
+        } else {
+          console.log('  -> reset scroll to 0 (forward)')
+          window.scrollTo(0, 0)
+        }
+      })
+    })
+    
+    // Wait for animation to complete, then remove class
     setTimeout(() => {
-      if (back) {
-        const saved = savedScroll[next] ?? 0
-        console.log('  -> restoring scroll for', next, ':', saved)
-        window.scrollTo(0, saved)
-      } else {
-        console.log('  -> reset scroll to 0 (forward)')
-        window.scrollTo(0, 0)
-      }
-      location.hash = targetHash
-      setTimeout(() => {
-        document.documentElement.classList.remove('transitioning')
-      }, 100)
-    }, 50)
+      document.documentElement.classList.remove('transitioning')
+    }, 400)
+    
+    // Perform navigation
+    location.hash = targetHash
   }
 
   onMount(() => {
