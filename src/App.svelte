@@ -43,7 +43,6 @@
     
     if (next === route) {
       console.log('  -> skipping (same route)')
-      // Still trigger hash change for reload
       location.hash = targetHash
       return
     }
@@ -54,6 +53,9 @@
       console.log('  -> vanilla fallback (no API support)')
       document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
       document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
+      // Force CSS transition by toggling a class
+      document.documentElement.classList.add('transitioning')
+      setTimeout(() => document.documentElement.classList.remove('transitioning'), 100)
       location.hash = targetHash
       return
     }
