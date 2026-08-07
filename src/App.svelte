@@ -43,6 +43,7 @@
     
     if (next === route) {
       console.log('  -> skipping (same route)')
+      // Still trigger hash change for reload
       location.hash = targetHash
       return
     }
