@@ -117,7 +117,10 @@
     
     console.log('Event listeners registered: click, pointerdown, hashchange')
 
-    const onHashChange = () => syncRoute()
+    const onHashChange = () => {
+      console.log('onHashChange: location.hash =', location.hash)
+      syncRoute()
+    }
     window.addEventListener('hashchange', onHashChange)
     return () => {
       document.removeEventListener('click', handleLinkClick)
