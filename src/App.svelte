@@ -19,6 +19,7 @@
   }
 
   let route = 'home'
+  let isNavigating = false
 
   function parseRoute() {
     const hash = location.hash.replace(/^#\/?/, '')
@@ -30,20 +31,52 @@
     parseRoute()
   }
 
+  function navigateWithTransition(targetHash) {
+    const next = targetHash.replace(/^#\/?/, '')?.split('?')[0] || 'home'
+    if (next === route || !document.startViewTransition) {
+      location.hash = targetHash
+      return
+    }
+
+    const back = (routes[next] ? 0 : 0) < (routes[route] ? 0 : 0)
+
+    document.documentElement.style.setProperty('--vt-x', back ? '-36px' : '36px')
+    document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
+
+    isNavigating = true
+    document.startViewTransition(() => {
+      location.hash = targetHash
+    }).finally(() => {
+      isNavigating = false
+    })
+  }
+
   onMount(() => {
     syncRoute()
+
+    // Handle navigation with view transition
+    function handleLinkClick(e) {
+      const link = e.target.closest('a')
+      if (!link) return
+      const href = link.getAttribute('href')
+      if (href?.startsWith('#/') && !link.getAttribute('target')) {
+        e.preventDefault()
+        navigateWithTransition(href)
+      }
+    }
+
+    document.addEventListener('click', handleLinkClick)
+
     const onHashChange = () => syncRoute()
     window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
+    return () => {
+      document.removeEventListener('click', handleLinkClick)
+      window.removeEventListener('hashchange', onHashChange)
+    }
   })
 
   $: title = routes[route] || 'DoctPrint'
   $: cartSize = $cart.length
-
-  $: if (typeof window !== 'undefined') {
-    const next = location.hash.replace(/^#\/?/, '').split('?')[0] || 'home'
-    if (next !== route) route = next
-  }
 </script>
 
 <DefaultLayout {route} {title} {cartSize} onBack={route === 'product'} showBottomNav={route !== 'product'}>
