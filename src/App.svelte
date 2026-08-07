@@ -33,20 +33,49 @@
 
   function navigateWithTransition(targetHash) {
     const next = targetHash.replace(/^#\/?/, '')?.split('?')[0] || 'home'
-    if (next === route || !document.startViewTransition) {
+    const supportsViewTransition = 'startViewTransition' in document
+    
+    console.log('navigateWithTransition called')
+    console.log('  targetHash:', targetHash)
+    console.log('  next:', next)
+    console.log('  current route:', route)
+    console.log('  supportsViewTransition:', supportsViewTransition)
+    
+    if (next === route) {
+      console.log('  -> skipping (same route)')
+      location.hash = targetHash
+      return
+    }
+    
+    if (!supportsViewTransition) {
+      console.log('  -> skipping (API not supported)')
       location.hash = targetHash
       return
     }
 
     const back = (routes[next] ? 0 : 0) < (routes[route] ? 0 : 0)
+    console.log('  -> starting view transition (back:', back + ')')
 
     document.documentElement.style.setProperty('--vt-x', back ? '-36px' : '36px')
     document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
 
     isNavigating = true
-    document.startViewTransition(() => {
+    
+    // Check for view-transition-name elements
+    const elements = document.querySelectorAll('[style*="view-transition-name"]')
+    console.log('  view-transition-name elements:', elements.length)
+    
+    const transition = document.startViewTransition(() => {
+      console.log('  -> startViewTransition callback')
       location.hash = targetHash
-    }).finally(() => {
+    })
+    
+    transition.ready.then(() => {
+      console.log('  -> transition ready')
+    })
+    
+    transition.finished.then(() => {
+      console.log('  -> transition finished')
       isNavigating = false
     })
   }
@@ -56,7 +85,7 @@
 
     // Check if view transition API is supported
     const supportsViewTransition = 'startViewTransition' in document
-    console.log('View transition supported:', supportsViewTransition)
+    console.log('onMount - View transition supported:', supportsViewTransition)
 
     // Handle navigation with view transition
     function handleLinkClick(e) {
