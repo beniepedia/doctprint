@@ -69,8 +69,9 @@
 
     isNavigating = true
     
-    // Reset scroll before transition
+    // Reset scroll BEFORE transition (critical for fresh scroll position)
     window.scrollTo(0, 0)
+    console.log('  -> scroll reset to 0')
     
     // Check for view-transition-name elements
     const elements = document.querySelectorAll('[style*="view-transition-name"]')
