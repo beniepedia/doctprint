@@ -56,6 +56,8 @@
       // Force CSS transition by toggling a class
       document.documentElement.classList.add('transitioning')
       setTimeout(() => document.documentElement.classList.remove('transitioning'), 100)
+      // Reset scroll before navigate
+      window.scrollTo(0, 0)
       location.hash = targetHash
       return
     }
@@ -66,6 +68,9 @@
     document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
 
     isNavigating = true
+    
+    // Reset scroll before transition
+    window.scrollTo(0, 0)
     
     // Check for view-transition-name elements
     const elements = document.querySelectorAll('[style*="view-transition-name"]')
