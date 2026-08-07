@@ -161,7 +161,7 @@
   </div>
 </section>
 
-<div class="fixed bottom-0 inset-x-0 z-50 bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] p-4 pb-safe flex gap-4">
+<div class="fixed bottom-0 inset-x-0 z-50 bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] p-4 pb-safe flex gap-4 md:pb-4">
   <button class={`inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors active:scale-95 px-3 py-2 text-sm flex-1 bg-surface border border-primary text-primary hover:bg-surface-low ${soldOut ? 'opacity-50 pointer-events-none' : ''}`} disabled={soldOut} on:click={() => addToCart(product.id, 1)}>
     <span class="material-symbols-outlined">add_shopping_cart</span>
     + Keranjang

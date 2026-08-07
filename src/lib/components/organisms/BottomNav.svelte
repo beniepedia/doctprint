@@ -16,7 +16,7 @@
   {#each items as it}
     {@const isActive = it.id === active}
     <a href={it.href} aria-label={it.label} class="flex flex-col items-center justify-center hover:opacity-80 transition-opacity group pointer-events-auto min-w-0 flex-1 py-2">
-      <div class={`px-4 py-1 rounded-full flex items-center justify-center relative ${isActive ? 'text-accent bg-accent-soft' : 'text-text-muted'} transition-colors`}>
+      <div class={`px-4 py-1 rounded-full flex items-center justify-center relative ${isActive ? 'text-accent bg-accent-soft' : 'text-text-muted'} transition-colors leading-none`}>
         <Icon name={it.icon} className="mb-1" filled={isActive} />
         {#if it.id === 'cart'}
           <CartBadge {count} />

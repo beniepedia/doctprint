@@ -6,10 +6,10 @@
   export let onBack = false
 </script>
 
-<header class="fixed top-0 inset-x-0 z-50 bg-surface border-b border-border shadow-sm flex items-center gap-3 px-4 h-16">
+<header class="fixed top-0 inset-x-0 z-[70] bg-surface border-b border-border shadow-sm flex items-center gap-3 px-4 h-16">
   {#if onBack}
-    <a href="#/home" aria-label="Kembali" class="text-accent-deep hover:bg-surface-low active:scale-95 transition p-2 rounded-full">
-      <Icon name="arrow_back" />
+    <a href="#/shop" aria-label="Kembali" class="inline-flex items-center justify-center w-10 h-10 p-0 text-accent-deep hover:bg-surface-low active:scale-95 transition rounded-full">
+      <Icon name="arrow_back" className="text-[22px]" />
     </a>
   {:else if left}
     <button aria-label="Menu" class="hidden md:block text-accent-deep hover:bg-surface-low active:scale-95 transition p-2 rounded-full">

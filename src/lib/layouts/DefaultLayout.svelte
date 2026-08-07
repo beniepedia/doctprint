@@ -4,12 +4,16 @@
   export let route = 'home'
   export let title = 'DoctPrint'
   export let cartSize = 0
+  export let onBack = false
+  export let showBottomNav = true
 </script>
 
-<TopApp {title} />
+<TopApp {title} {onBack} />
 
 <div class="pt-16 pb-24 md:pb-12 relative z-0">
   <slot />
 </div>
 
-<BottomNav active={route} count={cartSize} />
+{#if showBottomNav}
+  <BottomNav active={route} count={cartSize} />
+{/if}

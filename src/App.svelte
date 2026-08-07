@@ -46,7 +46,7 @@
   }
 </script>
 
-<DefaultLayout {route} {title} {cartSize}>
+<DefaultLayout {route} {title} {cartSize} onBack={route === 'product'} showBottomNav={route !== 'product'}>
   {#if route === 'home'}
     <HomePage />
   {:else if route === 'shop'}
