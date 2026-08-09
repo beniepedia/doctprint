@@ -35,6 +35,29 @@
     if (path !== route) route = path
   }
 
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+  const nextFrame = () => new Promise((r) => requestAnimationFrame(r))
+  const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  // Menunggu animasi slide benar-benar selesai (via animationend) supaya
+  // pergantian halaman sinkron dengan animasi, bukan berdasarkan timer.
+  // Timeout hanya sebagai pengaman (mis. animasi tidak berjalan).
+  function waitForSlide(el, name, fallbackMs) {
+    return Promise.race([
+      new Promise((resolve) => {
+        const done = (e) => {
+          if (e.animationName !== name) return
+          el.removeEventListener('animationend', done)
+          resolve()
+        }
+        el.addEventListener('animationend', done)
+      }),
+      sleep(fallbackMs),
+    ])
+  }
+
+  let navInProgress = false
+
   async function navigateWithTransition(targetHash) {
     const next = targetHash.replace(/^#\/?/, '')?.split('?')[0] || 'home'
 
@@ -43,29 +66,59 @@
       return
     }
 
+    // Skip animation if a navigation is already running (rapid taps)
+    if (navInProgress) {
+      location.hash = targetHash
+      return
+    }
+
+    // Animasi slide maju (kanan ke kiri) untuk halaman tanpa tombol back
+    // (home/shop/cart/profile). Arah mundur hanya untuk keluar dari halaman
+    // yang punya tombol back (halaman detail produk).
+    const isBackPage = route === 'product'
+
+    // Restore posisi scroll tetap mengikuti urutan halaman (rank)
     const back = (routeRank[next] ?? 0) < (routeRank[route] ?? 0)
 
     // Save current scroll position BEFORE any changes
     savedScroll[route] = window.scrollY
 
-    // Set CSS variables for slide direction & duration
-    document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
-    document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
+    const anim = !reduceMotion()
+    const exitCls = isBackPage ? 'vt-exit-back' : 'vt-exit-forward'
+    const enterCls = isBackPage ? 'vt-enter-back' : 'vt-enter-forward'
+    const exitName = isBackPage ? 'vt-slide-out-right' : 'vt-slide-out-left'
+    const enterName = isBackPage ? 'vt-slide-in-from-left' : 'vt-slide-in-from-right'
+    const container = document.getElementById('page-container')
 
-    const update = async () => {
+    navInProgress = true
+    try {
+      // 1. Slide halaman lama keluar (arah sesuai maju/mundur)
+      if (anim) {
+        document.body.classList.add(exitCls)
+        await waitForSlide(container, exitName, 250)
+      }
+
+      // 2. Tukar halaman di dalam container
       location.hash = targetHash
       syncRoute()
       await tick()
-      // Restore scroll right after the new page is rendered (inside the
-      // transition callback, so the new snapshot captures the right position)
+      // Restore scroll right after the new page is rendered
       if (back) window.scrollTo(0, savedScroll[next] ?? 0)
       else window.scrollTo(0, 0)
-    }
 
-    if (document.startViewTransition) {
-      document.startViewTransition(update)
-    } else {
-      update()
+      // 3. Slide halaman baru masuk — beri 2 frame agar halaman baru sempat
+      //    ter-paint (masih di luar layar) sebelum animasi jalan, sehingga
+      //    tidak ada frame-drop saat mulai bergerak.
+      if (anim) {
+        await nextFrame()
+        await nextFrame()
+        document.body.classList.remove('vt-exit-back', 'vt-exit-forward')
+        document.body.classList.add(enterCls)
+        await waitForSlide(container, enterName, 320)
+      }
+    } finally {
+      document.body.classList.remove('vt-exit-back', 'vt-exit-forward', 'vt-enter-back', 'vt-enter-forward')
+      navInProgress = false
     }
   }
 

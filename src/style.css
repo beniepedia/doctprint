@@ -62,6 +62,11 @@
 /* ============================================================
  * Base
  * ============================================================ */
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   @apply bg-bg text-text-primary font-sans antialiased;
 }
@@ -130,34 +135,85 @@ input[type='search']::-webkit-search-results-decoration {
   }
 }
 
-::view-transition-old(root) {
-  animation: vt-out var(--vt-dur, 0.3s) ease both;
+/* ============================================================
+ * Transisi pindah halaman (slide) — cross-browser
+ * Kelas di-toggle pada <body> dari App.svelte. Menggeser
+ * header, konten, dan bottom nav sekaligus tanpa View
+ * Transitions API supaya bekerja di semua browser.
+ * ============================================================ */
+body.vt-exit-forward header,
+body.vt-exit-forward nav,
+body.vt-exit-forward #page-container {
+  animation: vt-slide-out-left 0.18s cubic-bezier(0.32, 0, 0.67, 0) both;
 }
-::view-transition-new(root) {
-  animation: vt-in var(--vt-dur, 0.3s) cubic-bezier(0.4, 0, 0.2, 1) both;
+body.vt-enter-forward header,
+body.vt-enter-forward nav,
+body.vt-enter-forward #page-container {
+  animation: vt-slide-in-from-right 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+body.vt-exit-back header,
+body.vt-exit-back nav,
+body.vt-exit-back #page-container {
+  animation: vt-slide-out-right 0.18s cubic-bezier(0.32, 0, 0.67, 0) both;
+}
+body.vt-enter-back header,
+body.vt-enter-back nav,
+body.vt-enter-back #page-container {
+  animation: vt-slide-in-from-left 0.2s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
 }
 
-@keyframes vt-out {
+/* Promosikan ke lapisan kompositor agar animasi transform berjalan mulus */
+body[class*="vt-exit-"] header,
+body[class*="vt-exit-"] nav,
+body[class*="vt-exit-"] #page-container,
+body[class*="vt-enter-"] header,
+body[class*="vt-enter-"] nav,
+body[class*="vt-enter-"] #page-container {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@keyframes vt-slide-out-left {
   to {
-    opacity: 0;
-    transform: translateX(calc(0px - var(--vt-x, 100%)));
+    transform: translateX(-100%);
   }
 }
-@keyframes vt-in {
+@keyframes vt-slide-out-right {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes vt-slide-in-from-right {
   from {
-    opacity: 0;
-    transform: translateX(var(--vt-x, 100%));
+    transform: translateX(100%);
   }
   to {
-    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes vt-slide-in-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
     transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .anim-kenburns,
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
+  body.vt-exit-forward header,
+  body.vt-exit-forward nav,
+  body.vt-exit-forward #page-container,
+  body.vt-enter-forward header,
+  body.vt-enter-forward nav,
+  body.vt-enter-forward #page-container,
+  body.vt-exit-back header,
+  body.vt-exit-back nav,
+  body.vt-exit-back #page-container,
+  body.vt-enter-back header,
+  body.vt-enter-back nav,
+  body.vt-enter-back #page-container {
     animation: none !important;
   }
 }
