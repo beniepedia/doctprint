@@ -162,14 +162,40 @@ body.vt-enter-back #page-container {
   animation: vt-slide-in-from-left 0.2s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
 }
 
+/* Crossfade konten untuk navigasi produk (shared-image morph + fade) */
+body.vt-crossfade header,
+body.vt-crossfade nav,
+body.vt-crossfade #page-container {
+  animation: vt-crossfade 0.16s ease-out both;
+}
+
+/* Clone gambar untuk shared-element morph (teknik FLIP).
+   Posisi/ukuran/transform di-set inline dari App.svelte. */
+.vt-shared-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  object-fit: cover;
+  pointer-events: none;
+  border-radius: 8px;
+  transform-origin: 0 0;
+  will-change: transform, opacity;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-radius 0.45s ease, opacity 0.18s ease;
+}
+
 /* Promosikan ke lapisan kompositor agar animasi transform berjalan mulus */
 body[class*="vt-exit-"] header,
 body[class*="vt-exit-"] nav,
 body[class*="vt-exit-"] #page-container,
 body[class*="vt-enter-"] header,
 body[class*="vt-enter-"] nav,
-body[class*="vt-enter-"] #page-container {
-  will-change: transform;
+body[class*="vt-enter-"] #page-container,
+body.vt-crossfade header,
+body.vt-crossfade nav,
+body.vt-crossfade #page-container {
+  will-change: transform, opacity;
   backface-visibility: hidden;
 }
 
@@ -199,6 +225,14 @@ body[class*="vt-enter-"] #page-container {
     transform: none;
   }
 }
+@keyframes vt-crossfade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .anim-kenburns,
@@ -213,7 +247,10 @@ body[class*="vt-enter-"] #page-container {
   body.vt-exit-back #page-container,
   body.vt-enter-back header,
   body.vt-enter-back nav,
-  body.vt-enter-back #page-container {
+  body.vt-enter-back #page-container,
+  body.vt-crossfade header,
+  body.vt-crossfade nav,
+  body.vt-crossfade #page-container {
     animation: none !important;
   }
 }
