@@ -98,12 +98,12 @@
   </div>
 </section>
 
-<main class="max-w-7xl mx-auto w-full flex flex-col gap-6 px-4">
-  <section class="flex flex-col gap-3">
+<main class="max-w-7xl mx-auto w-full flex flex-col">
+  <section class="flex flex-col gap-3 px-4">
     <div class="px-0 flex justify-between items-center">
       <h3 class="text-lg md:text-xl font-semibold text-text-primary">Kategori</h3>
     </div>
-    <div class="flex overflow-x-auto no-scrollbar gap-4 pl-2 pr-1 pb-2 snap-x">
+    <div class="flex overflow-x-auto no-scrollbar gap-4 pl-2  pb-2 snap-x">
       {#each categories as c}
         <a href="#/shop" class="snap-start flex flex-col items-center gap-1 min-w-[80px] group cursor-pointer">
           <div class="w-16 h-16 rounded-full bg-surface-mid flex items-center justify-center group-hover:bg-surface-high transition-colors shadow-sm border border-outline-variant/30">
@@ -117,11 +117,11 @@
   </section>
 
   <section class="flex flex-col gap-4 bg-surface py-6 border-y border-border">
-    <div class="px-0 flex justify-between items-center">
+    <div class="px-4 flex justify-between items-center">
       <h3 class="text-lg md:text-xl font-semibold text-text-primary">Terbaru</h3>
       <a href="#/shop" class="text-sm font-semibold text-accent-deep hover:underline">Lihat Semua</a>
     </div>
-    <div class="pb-4">
+    <div class="pb-4 px-4">
       <div class="flex overflow-x-auto no-scrollbar gap-2 snap-x">
         {#each newArrivals as p}
           <ProductCard {p} horizontal={true} />
@@ -130,7 +130,7 @@
     </div>
   </section>
 
-  <section class="flex flex-col gap-4 bg-surface py-6 border-y border-border">
+  <section class="flex flex-col gap-4 bg-surface py-6 border-y border-border px-4">
     <div class="px-0 flex justify-between items-center">
       <h3 class="text-lg md:text-xl font-semibold text-text-primary">Rekomendasi untuk Anda</h3>
     </div>
