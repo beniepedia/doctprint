@@ -8,7 +8,7 @@
   $: ({ subtotal, tax, total, count } = $orderTotals)
 </script>
 
-<section style="view-transition-name:cart" class="max-w-7xl mx-auto px-4 md:px-8 py-6">
+<section class="max-w-7xl mx-auto px-4 md:px-8 py-6">
   <div class="mb-6">
     <h2 class="text-2xl md:text-4xl font-bold text-text-primary mb-1">Keranjang Anda</h2>
     <p class="text-base text-text-muted">{count} item di keranjang</p>

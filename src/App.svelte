@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte'
+  import { onMount, tick } from 'svelte'
   import { cart } from './lib/stores/cart.js'
   import DefaultLayout from './lib/layouts/DefaultLayout.svelte'
   import HomePage from './lib/routes/home/HomePage.svelte'
@@ -21,59 +21,52 @@
   // Saved scroll positions per route
   const savedScroll = {}
   const routeRank = { home: 0, shop: 1, product: 2, cart: 3, checkout: 4, profile: 5 }
-  let lastRoute = null
 
   let route = 'home'
-  let isNavigating = false
 
   function parseRoute() {
     const hash = location.hash.replace(/^#\/?/, '')
     const [path] = hash.split('?')
-    route = path || 'home'
+    return path || 'home'
   }
 
   function syncRoute() {
-    parseRoute()
+    const path = parseRoute()
+    if (path !== route) route = path
   }
 
-  function navigateWithTransition(targetHash) {
+  async function navigateWithTransition(targetHash) {
     const next = targetHash.replace(/^#\/?/, '')?.split('?')[0] || 'home'
-    
+
     if (next === route) {
       location.hash = targetHash
       return
     }
-    
+
     const back = (routeRank[next] ?? 0) < (routeRank[route] ?? 0)
-    
+
     // Save current scroll position BEFORE any changes
     savedScroll[route] = window.scrollY
-    
-    // Set CSS variables for animation
+
+    // Set CSS variables for slide direction & duration
     document.documentElement.style.setProperty('--vt-x', back ? '-100%' : '100%')
     document.documentElement.style.setProperty('--vt-dur', back ? '0.35s' : '0.3s')
-    document.documentElement.classList.add('transitioning')
-    
-    // Reset scroll IMMEDIATELY (before animation)
-    // Use requestAnimationFrame to ensure it happens before paint
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (back) {
-          const saved = savedScroll[next] ?? 0
-          window.scrollTo(0, saved)
-        } else {
-          window.scrollTo(0, 0)
-        }
-      })
-    })
-    
-    // Wait for animation to complete, then remove class
-    setTimeout(() => {
-      document.documentElement.classList.remove('transitioning')
-    }, 400)
-    
-    // Perform navigation
-    location.hash = targetHash
+
+    const update = async () => {
+      location.hash = targetHash
+      syncRoute()
+      await tick()
+      // Restore scroll right after the new page is rendered (inside the
+      // transition callback, so the new snapshot captures the right position)
+      if (back) window.scrollTo(0, savedScroll[next] ?? 0)
+      else window.scrollTo(0, 0)
+    }
+
+    if (document.startViewTransition) {
+      document.startViewTransition(update)
+    } else {
+      update()
+    }
   }
 
   onMount(() => {
@@ -90,13 +83,7 @@
       }
     }
 
-    // Also listen for pointerdown for more reliable detection
-    function handlePointerDown(e) {
-      const link = e.target.closest('a')
-    }
-
     document.addEventListener('click', handleLinkClick)
-    document.addEventListener('pointerdown', handlePointerDown)
 
     const onHashChange = () => {
       syncRoute()
@@ -107,11 +94,6 @@
       window.removeEventListener('hashchange', onHashChange)
     }
   })
-
-  // Test function to trigger animation directly (for debugging)
-  function testTransition() {
-    navigateWithTransition('#/shop')
-  }
 
   $: title = routes[route] || 'DoctPrint'
   $: cartSize = $cart.length

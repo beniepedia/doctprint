@@ -61,11 +61,11 @@
   })
 </script>
 
-<section style="view-transition-name:product" class="max-w-7xl mx-auto px-4 md:px-8 py-6 pb-28">
+<section class="max-w-7xl mx-auto px-4 md:px-8 py-6 pb-28">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <div class="space-y-2">
       <div class="w-full aspect-square max-h-[600px] rounded-xl bg-surface shadow-sm border border-border overflow-hidden relative">
-        <div class="w-full h-full" style={`view-transition-name:pt-${product.id}`}>{@html currentMediaHtml()}</div>
+        <div class="w-full h-full">{@html currentMediaHtml()}</div>
         {#if soldOut}
           <span class="absolute top-3 right-3 bg-text-primary/80 text-white px-2.5 py-1 rounded text-xs font-semibold uppercase">Stok Habis</span>
         {/if}

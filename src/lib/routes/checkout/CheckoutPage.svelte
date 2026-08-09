@@ -14,7 +14,7 @@
     'data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="600"%3E%3Crect width="600" height="600" fill="%23eef1f5"/%3E%3Cg fill="none" stroke="%23c3cad4" stroke-width="8" stroke-linecap="round"%3E%3Crect x="170" y="150" width="260" height="360" rx="20"/%3E%3Cline x1="230" y1="260" x2="370" y2="260"/%3E%3Cline x1="230" y1="320" x2="370" y2="320"/%3E%3Cline x1="230" y1="380" x2="330" y2="380"/%3E%3C/g%3E%3C/svg%3E'
 </script>
 
-<section style="view-transition-name:checkout" class="max-w-7xl mx-auto w-full px-4 md:px-8 py-6">
+<section class="max-w-7xl mx-auto w-full px-4 md:px-8 py-6">
   <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
     <div class="md:col-span-8 space-y-6">
       <div>

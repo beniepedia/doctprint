@@ -136,24 +136,17 @@ input[type='search']::-webkit-search-results-decoration {
 ::view-transition-new(root) {
   animation: vt-in var(--vt-dur, 0.3s) cubic-bezier(0.4, 0, 0.2, 1) both;
 }
-::view-transition-group(*) {
-  animation-duration: var(--vt-dur, 0.3s);
-}
-::view-transition-old(*),
-::view-transition-new(*) {
-  animation-duration: var(--vt-dur, 0.3s);
-}
 
 @keyframes vt-out {
   to {
     opacity: 0;
-    transform: translateX(-100%);
+    transform: translateX(calc(0px - var(--vt-x, 100%)));
   }
 }
 @keyframes vt-in {
   from {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(var(--vt-x, 100%));
   }
   to {
     opacity: 1;
@@ -161,20 +154,10 @@ input[type='search']::-webkit-search-results-decoration {
   }
 }
 
-/* Fallback animasi jika view transition API tidak support */
-.transitioning ::view-transition-old(root) {
-  animation: vt-out 0.35s ease both;
-}
-.transitioning ::view-transition-new(root) {
-  animation: vt-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .anim-kenburns,
   ::view-transition-old(root),
-  ::view-transition-new(root),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
+  ::view-transition-new(root) {
     animation: none !important;
   }
 }

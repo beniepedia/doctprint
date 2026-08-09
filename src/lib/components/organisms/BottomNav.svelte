@@ -12,7 +12,7 @@
   ]
 </script>
 
-<nav style="view-transition-name:bottom-nav" class="md:hidden fixed bottom-0 inset-x-0 z-[60] bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-around items-center h-18 px-2  pointer-events-auto touch-manipulation" aria-label="Navigasi utama">
+<nav class="md:hidden fixed bottom-0 inset-x-0 z-[60] bg-surface border-t border-border shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-around items-center h-18 px-2  pointer-events-auto touch-manipulation" aria-label="Navigasi utama">
   {#each items as it}
     {@const isActive = it.id === active}
     <a href={it.href} aria-label={it.label} class="flex flex-col items-center justify-center hover:opacity-80 transition-opacity group pointer-events-auto min-w-0 flex-1 py-2">
